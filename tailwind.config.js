@@ -8,6 +8,7 @@ module.exports = {
         secondary: "#8724D9",
         popular: "#9200FF",
         hot: "#FF0000",
+        "black-board": "#2E7D22",
         "gray-100": "#F7F7F7",
         "gray-200": "#EFEFEF",
         "gray-300": "#D9D9D9",
@@ -20,10 +21,6 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    // 單行省略號和多行省略號
-    require("@tailwindcss/line-clamp"),
-  ],
 };
 
 

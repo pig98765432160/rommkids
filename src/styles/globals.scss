@@ -6,6 +6,12 @@
   .block-primary {
     @apply rounded flex flex-col shadow bg-white
   }
+  .board-catalogue {
+    @apply bg-white border-2 border-black rounded-full
+  }
+  .icon-hover path {
+    fill: theme("colors.primary")
+  }
 }
 
 html,
@@ -18,7 +24,9 @@ body {
   letter-spacing: 0.05em;
   // scroll-behavior: smooth !important;
   scroll-padding-top: 70px;
-  background-color: #efefef;
+  background: url("/bg_body.jpg") repeat left top;
+  background-size: 120px;
+  padding-bottom: 0;
 }
 
 a {
@@ -34,15 +42,20 @@ a {
   padding: 0;
 }
 
-::selection {
-  color: #fff;
-  background: rgba(146, 0, 255, 0.5);
-}
-
 section {
   width: 100%;
 }
 
 p {
   margin: 0;
+}
+
+.card {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  height: auto;
+  margin: 0 0px 20px 0px;
+  box-shadow: 4px 4px 5px rgba(20%, 20%, 20%, 0.5);
+  padding: 10px 10px 15px 10px;
+  overflow: auto;
 }

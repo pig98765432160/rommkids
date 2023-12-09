@@ -1,6 +1,7 @@
 import { FC, useMemo, createContext, useRef, useContext } from "react";
 import { useRouter } from "next/router";
 import { Header } from "@/components/Layout";
+import BoardCatalogue from "./BoardCatalogue";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -23,7 +24,8 @@ const Layout: FC<LayoutProps> = ({ children }) => {
         return (
           <>
             <Header />
-            {children}
+            <BoardCatalogue />
+            <div className="contents">{children}</div>
           </>
         );
     }
