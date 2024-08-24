@@ -11,94 +11,55 @@ import {
   Tooltip,
 } from "@mui/material";
 import Link from "next/link";
+import { MenuItemBg } from "../Icons/menuItemIcon";
 
-const Header = () => {
+const Header: FC = () => {
   const router = useRouter();
-  return (
-    <header>
-      <div className="relative w-full md:w-[1000px] h-[513px] mx-auto mt-3">
-        <Image
-          src={"/SVG/TOP_bb.svg"}
-          alt="boardImage"
-          width={1439}
-          height={739}
-          className="w-full"
-        />
-        <h1 className="absolute top-20 left-24">
-          <Image
-            src={"/ROMM/05.png"}
-            alt={"logo"}
-            width={440}
-            height={176}
-            className="w-[220px]"
-          />
-        </h1>
-        <div className="absolute top-20 right-20 flex items-center gap-3">
-          {/* <Image
-            src={"/SVG/TOP_search.svg"}
-            alt={"fb"}
-            width={280}
-            height={86}
-            className="w-[280px] h-[86px]"
-          /> */}
-          <Link
-            target="_blank"
-            rel="stylesheet"
-            href="https://www.facebook.com/profile.php?id=100063976814943"
-            className="hover:icon-hover"
-          >
-            <Image
-              src={"/SVG/TOP_fb.svg"}
-              alt={"fb"}
-              width={100}
-              height={93}
-              className="w-[60px]"
-            />
-          </Link>
 
-          <Link
-            target="_blank"
-            rel="stylesheet"
-            href="https://www.instagram.com/romm1201/"
-          >
-            <Image
-              src={"/SVG/TOP_ig.svg"}
-              alt={"ig"}
-              width={100}
-              height={93}
-              className="w-[60px]"
-            />
-          </Link>
-          <Link
-            target="_blank"
-            rel="stylesheet"
-            href="https://www.youtube.com/@romm501/streams"
-          >
-            <Image
-              src={"/SVG/TOP_yt.svg"}
-              alt={"yt"}
-              width={100}
-              height={93}
-              className="w-[60px]"
-            />
-          </Link>
-        </div>
-        <div className="w-full absolute top-44 flex items-center justify-center gap-8">
+  return (
+    <header className="head absolute top-0 left-0 w-full h-[130px] flex justify-between z-50 bg-white">
+      <h1 className="absolute top-0 left-0 w-60 z-10">
+        <Link href="/" className="w-60">
           <Image
-            src="/ROMM/10.png"
-            width={436}
-            height={364}
-            className="w-[250px]"
-            alt="嗄歐"
+            src="/assets/image/common/logo.png"
+            alt="Romm 嗄歐麥麥"
+            width={500}
+            height={355}
+            className="rounded-br-3xl"
           />
-          <Image
-            src="/ROMM/11.png"
-            width={436}
-            height={364}
-            className="w-[250px]"
-            alt="麥麥"
+        </Link>
+      </h1>
+      <div className="relative w-full flex items-center justify-center gap-28 mx-auto">
+        <Link href="/forums" className="relative text-brown font-black">
+          <p className="relative z-10">論壇 FORUMS</p>
+          <MenuItemBg
+            width={160}
+            height={40}
+            className="absolute -top-2 -left-4 icon-cute-yellow"
           />
-        </div>
+        </Link>
+        <Link
+          href="/lifestyle"
+          className="relative menu02 text-brown font-black"
+        >
+          <p className="relative z-10">日誌 LIFESTYLE</p>
+          <MenuItemBg
+            width={160}
+            height={40}
+            className="absolute -top-2 -left-4 icon-cute-blue"
+          />
+        </Link>
+        <Link
+          href="/creative"
+          className="relative menu03 text-brown font-black"
+        >
+          <p className="relative z-10">發想 CREATIVE</p>
+          <MenuItemBg
+            width={160}
+            height={40}
+            className="absolute -top-2 -left-4 icon-cute-green"
+          />
+        </Link>
       </div>
     </header>
   );
