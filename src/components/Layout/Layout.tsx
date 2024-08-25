@@ -1,6 +1,6 @@
 import { FC, useMemo, createContext, useRef, useContext } from "react";
 import { useRouter } from "next/router";
-import { Footer, Header } from "@/components/Layout";
+import { FeedLayout, Footer, Header } from "@/components/Layout";
 import BoardCatalogue from "./BoardCatalogue";
 
 interface LayoutProps {
@@ -19,6 +19,16 @@ const Layout: FC<LayoutProps> = ({ children }) => {
         return <>{children}</>;
       case "500":
         return <>{children}</>;
+      case "forums":
+      case "article":
+        return (
+          <>
+            <Header />
+
+            <FeedLayout>{children}</FeedLayout>
+            <Footer />
+          </>
+        );
       default:
         return (
           <>

@@ -8,6 +8,8 @@ import { PageMetadata } from "@/components/PageMetadata";
 import { BASE_URL } from "@/shared/constants";
 import ErrorComponent from "@/components/ErrorComponent";
 import { EStatus } from "@/shared/types/Status";
+import FeedItem from "@/components/Feed/FeedItem";
+import { FeedList } from "@/components/Feed";
 
 interface FeedProps {
   isError: boolean;
@@ -17,7 +19,6 @@ interface FeedProps {
 const ForumsPage: NextPage<FeedProps> = (props) => {
   const { isError, errorCode } = props;
   const router = useRouter();
-  const [login, setLogin] = useState(false);
 
   return (
     <>
@@ -28,7 +29,13 @@ const ForumsPage: NextPage<FeedProps> = (props) => {
         ogType="article"
         ogUrl={`${BASE_URL}${router.asPath}`}
       />
-      {isError ? <ErrorComponent code={errorCode} /> : <></>}
+      {isError ? (
+        <ErrorComponent code={errorCode} />
+      ) : (
+        <>
+          <FeedList data={undefined} />
+        </>
+      )}
     </>
   );
 };

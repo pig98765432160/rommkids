@@ -18,14 +18,16 @@ const Header: FC = () => {
 
   return (
     <header className="head absolute top-0 left-0 w-full h-[130px] flex justify-between z-50 bg-white">
-      <h1 className="absolute top-0 left-0 w-60 z-10">
-        <Link href="/" className="w-60">
+      <h1 className="absolute top-0 left-0 w-72 h-[200px] z-10 bg-white rounded-br-[50px]">
+        <Link
+          href="/"
+          className="w-full h-full flex items-center justify-center p-3"
+        >
           <Image
             src="/assets/image/common/logo.png"
             alt="Romm 嗄歐麥麥"
             width={500}
             height={355}
-            className="rounded-br-3xl"
           />
         </Link>
       </h1>
