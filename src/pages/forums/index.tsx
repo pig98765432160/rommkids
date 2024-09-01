@@ -1,24 +1,44 @@
-import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
-import Script from "next/script";
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useQuery } from "react-query";
-import Link from "next/link";
 import { PageMetadata } from "@/components/PageMetadata";
 import { BASE_URL } from "@/shared/constants";
 import ErrorComponent from "@/components/ErrorComponent";
-import { EStatus } from "@/shared/types/Status";
-import FeedItem from "@/components/Feed/FeedItem";
 import { FeedList } from "@/components/Feed";
+import { fetchFeed, getFeedDetail } from "@/helpers/apis/feedApi";
+import { useInfiniteQuery } from "react-query";
+import { EStatus } from "@/shared/types";
+import { useState } from "react";
 
 interface FeedProps {
-  isError: boolean;
-  errorCode: number;
+  feed: any;
 }
 
 const ForumsPage: NextPage<FeedProps> = (props) => {
-  const { isError, errorCode } = props;
+  const { feed } = props;
   const router = useRouter();
+  const [isFetchError, setIsFetchError] = useState(false);
+
+  const { data, isFetching, isError, hasNextPage, fetchNextPage } =
+    useInfiniteQuery(
+      ["fetchFeed"],
+      ({ pageParam = 1 }) =>
+        fetchFeed().then((res) => {
+          if (res.status === EStatus.SUCCESS) {
+            setIsFetchError(false);
+            return res.data;
+          } else {
+            setIsFetchError(true);
+            throw new Error(res.data);
+          }
+        }),
+      {
+        getNextPageParam: (lastPage, allPages) => {
+          return lastPage.length >= 20 ? allPages.length + 1 : undefined;
+        },
+        keepPreviousData: true,
+        staleTime: Infinity,
+      }
+    );
 
   return (
     <>
@@ -29,15 +49,31 @@ const ForumsPage: NextPage<FeedProps> = (props) => {
         ogType="article"
         ogUrl={`${BASE_URL}${router.asPath}`}
       />
-      {isError ? (
-        <ErrorComponent code={errorCode} />
+      {isFetchError ? (
+        <p className="text-hot text-center mt-5 w-full lg:w-[728px]">
+          請重新整理
+        </p>
       ) : (
-        <>
-          <FeedList data={undefined} />
-        </>
+        <FeedList
+          feed={data}
+          isFetching={isFetching}
+          isError={isError}
+          hasNextPage={hasNextPage}
+          fetchNextPage={fetchNextPage}
+        />
       )}
     </>
   );
 };
 
 export default ForumsPage;
+
+export async function getServerSideProps() {
+  const feeds = await fetchFeed();
+
+  return {
+    props: {
+      feed: feeds.data,
+    },
+  };
+}

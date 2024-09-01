@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react";
-import article01 from "../../../../public/documemt/article1.json";
 import Image from "next/image";
-import { NextPage } from "next";
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 import { Role_MM, Role_RO } from "@/components/Icons/character";
 import { renderToStaticMarkup } from "react-dom/server";
+import { getFeedDetail } from "@/helpers/apis/feedApi";
+import { handleErrorResponse } from "@/lib/utils";
 
-const ArticlePage: NextPage = () => {
-  const [article, setArticle] = useState(article01.content);
+interface Props {
+  feedDetail: any;
+}
+
+const ArticlePage: NextPage<Props> = (props) => {
+  const { feedDetail } = props;
+  const [article, setArticle] = useState(feedDetail.content);
 
   useEffect(() => {
     const svg_ro = renderToStaticMarkup(
@@ -25,24 +31,25 @@ const ArticlePage: NextPage = () => {
     replaced = replaced.replace(/B:/g, svg_ro);
 
     setArticle(replaced);
-  }, []);
+  }, [feedDetail]);
 
   return (
     <>
       <div className="w-full h-auto">
         <Image
           loader={({ src }: any) => src}
-          src="/assets/image/article/cover_1.png"
+          src={feedDetail.cover}
           alt="article_cover"
           width={2560}
           height={1536}
           blurDataURL="/assets/image/common/logo.png"
           priority
+          unoptimized
         />
       </div>
       <div className="p-5">
         <h2 className="text-3xl font-black text-brown mb-5">
-          討論話題：{article01.title}
+          討論話題：{feedDetail.title}
         </h2>
         <div dangerouslySetInnerHTML={{ __html: article }} />
       </div>
@@ -51,3 +58,23 @@ const ArticlePage: NextPage = () => {
 };
 
 export default ArticlePage;
+
+export const getServerSideProps: GetServerSideProps | any = async ({
+  query,
+  req,
+  res,
+}: GetServerSidePropsContext) => {
+  const fid = query.fid as string;
+  if (!fid || isNaN(Number(fid))) {
+    res.statusCode = 404;
+    return handleErrorResponse(404);
+  }
+
+  const feedDetail = await getFeedDetail(+fid);
+
+  return {
+    props: {
+      feedDetail: feedDetail.data,
+    },
+  };
+};

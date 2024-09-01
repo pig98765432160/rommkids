@@ -30,7 +30,8 @@
     "src/types/next-auth.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "src/lib/db.js"
   ],
   "exclude": ["node_modules"]
 }

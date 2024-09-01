@@ -3,22 +3,13 @@ import React, { FC } from "react";
 
 const FeedItemLoading: FC = () => {
   return (
-    <div className="w-full lg:w-[728px] flex flex-col gap-2 px-4 py-4 mb-1 lg:mb-3 rounded bg-white">
-      <div className="hidden lg:flex items-center ">
-        <Skeleton variant="circular" width={30} height={30} />
-        <Skeleton variant="text" width="50%" sx={{ marginLeft: "8px" }} />
+    <div className="w-full flex items-center gap-4 p-4 image-box border-b border-gray-300">
+      <Skeleton variant="rectangular" width="300px" height="180px" />
+      <div className="flex-1 flex flex-col gap-3">
+        <Skeleton variant="rectangular" width="100%" height="64px" />
+        <Skeleton variant="rectangular" width="100%" height="40px" />
+        <Skeleton variant="rectangular" width="40%" height="16px" />
       </div>
-      <div className="flex lg:hidden items-center ">
-        <Skeleton variant="circular" width={20} height={20} />
-        <Skeleton variant="text" width="50%" sx={{ marginLeft: "6px" }} />
-      </div>
-      <div className="flex items-start justify-between">
-        <div className="flex flex-col w-full">
-          <Skeleton variant="text" />
-          <Skeleton variant="text" />
-        </div>
-      </div>
-      <Skeleton variant="text" width="40%" />
     </div>
   );
 };

@@ -33,7 +33,7 @@ const Header: FC = () => {
       </h1>
       <div className="relative w-full flex items-center justify-center gap-28 mx-auto">
         <Link href="/forums" className="relative text-brown font-black">
-          <p className="relative z-10">論壇 FORUMS</p>
+          <p className="relative z-10">討論區 FORUMS</p>
           <MenuItemBg
             width={160}
             height={40}
