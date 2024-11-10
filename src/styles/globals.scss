@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "./head.scss";
+
+@layer components {
+  .block-primary {
+    @apply rounded flex flex-col shadow bg-white
+  }
+  .board-catalogue {
+    @apply bg-white border-2 border-black rounded-full
+  }
+
+  .icon-primary path {
+    fill: theme("colors.primary")
+  }
+  .icon-hot path {
+    fill: theme("colors.hot")
+  }
+  .icon-hot circle {
+    fill: theme("colors.hot")
+  }
+  .icon-cute-yellow path {
+    fill: theme("colors.cute-yellow")
+  }
+  .icon-cute-blue path {
+    fill: theme("colors.cute-blue")
+  }
+  .icon-cute-green path {
+    fill: theme("colors.cute-green")
+  }
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif !important;
+  font-display: swap;
+  letter-spacing: 0.05em;
+  // scroll-behavior: smooth !important;
+  // scroll-padding-top: 70px;
+  // background: url("/bg_body.jpg") repeat left top;
+  // background-size: 120px;
+  padding-bottom: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+section {
+  width: 100%;
+}
+
+p {
+  margin: 0;
+}
+
+// 滑鼠hover圖片放大
+.image-box {
+  overflow: hidden;
+}
+
+.image-box .hoverimg {
+  transition: all 0.3s;
+  transform: scale(1);
+}
+
+.image-box:hover .hoverimg {
+  transform: scale(1.1);
+}
+
+.card {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  height: auto;
+  margin: 0 0px 20px 0px;
+  box-shadow: 4px 4px 5px rgba(20%, 20%, 20%, 0.5);
+  padding: 10px 10px 15px 10px;
+  overflow: auto;
+}
+
+.home-yt {
+  iframe {
+    border-radius: 20px;
+  }
+}
+
+.bg-decoration ::after{
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: -17px;
+  width: 100%;
+  height: 60px;
+  background: url('/assets/image/common/about_box01_wave.png') center center repeat-x;
+  background-size: 1500px 60px;
+}
+
+.article span {
+  display: flex;
+}

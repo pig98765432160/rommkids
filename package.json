@@ -1,0 +1,38 @@
+{
+  "name": "rommkids",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^6.1.6",
+    "@reduxjs/toolkit": "^2.2.7",
+    "@types/node": "20.4.9",
+    "@types/react": "18.2.19",
+    "@types/react-dom": "18.2.7",
+    "axios": "^1.7.5",
+    "dayjs": "^1.11.13",
+    "eslint": "8.46.0",
+    "eslint-config-next": "13.4.13",
+    "froala-editor": "^4.2.1",
+    "mysql2": "^3.11.0",
+    "next": "13.4.13",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-froala-wysiwyg": "^4.2.1",
+    "react-query": "^3.39.3",
+    "sass": "^1.57.1",
+    "typescript": "5.1.6"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.27",
+    "tailwindcss": "^3.3.3"
+  }
+}
