@@ -17,6 +17,7 @@
     "@types/react": "18.2.19",
     "@types/react-dom": "18.2.7",
     "axios": "^1.7.5",
+    "dayjs": "^1.11.13",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.13",
     "froala-editor": "^4.2.1",

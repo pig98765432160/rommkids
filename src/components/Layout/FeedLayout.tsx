@@ -2,6 +2,7 @@ import { FC, ReactNode } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { EnvelopeIcon, FBIcon, IGIcon, YTIcon } from "../Icons/icons";
+import Link from "next/link";
 
 interface Props {
   children: ReactNode;
@@ -12,18 +13,56 @@ const FeedLayout: FC<Props> = (props) => {
   const router = useRouter();
   const { pathname } = useRouter();
 
+  const forumsCats = [
+    {
+      id: 0,
+      c_type: "",
+      name: "全部",
+    },
+    {
+      id: 1,
+      c_type: "live",
+      name: "生活",
+    },
+    {
+      id: 2,
+      c_type: "chat",
+      name: "閒聊",
+    },
+    {
+      id: 3,
+      c_type: "parenting",
+      name: "親子",
+    },
+    {
+      id: 4,
+      c_type: "games",
+      name: "遊戲",
+    },
+  ];
+
   return (
     <div className="w-full relative flex justify-center py-[100px] bg-cute-beige">
       <div className="w-full lg:max-w-[960px] flex flex-col gap-5 mt-5">
-        <ul className="w-full h-[50px] flex items-center gap-8 bg-brown text-white text-lg font-black px-8">
-          <li>全部</li>
-          <li>生活</li>
-          <li>閒聊</li>
-          <li>親子</li>
-          <li>遊戲</li>
+        <ul className="relative w-full h-[50px] flex items-center bg-brown text-white text-lg font-black px-8">
+          {forumsCats.map((item) => (
+            <Link
+              key={item.id}
+              href={item.id !== 0 ? `/forums?c=${item.c_type}` : "/forums"}
+              className={`${
+                router.asPath.includes(item.c_type)
+                  ? "border-b-4 border-white"
+                  : ""
+              } w-20 h-full flex items-center justify-center hover:bg-light-brown`}
+            >
+              <li>{item.name}</li>
+            </Link>
+          ))}
         </ul>
         <div className="flex justify-between">
-          <article className="w-full lg:w-[630px] bg-white">{children}</article>
+          <article className="w-full lg:w-[630px] bg-white rounded">
+            {children}
+          </article>
           <div className="w-[300px] flex flex-col gap-5">
             <div className="w-full flex flex-col gap-4 bg-white rounded px-6 pt-12 pb-8">
               <Image

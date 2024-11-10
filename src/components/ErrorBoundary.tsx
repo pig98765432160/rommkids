@@ -23,7 +23,7 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   public render() {
-    if (!this.state.hasError) {
+    if (this.state.hasError) {
       return (
         <div className="w-screen h-screen c-container flex flex-col justify-center items-center">
           <h1 className="title text-warning">Oops, there is an error!</h1>

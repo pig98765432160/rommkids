@@ -25,7 +25,7 @@ const FeedItem: FC<Props> = forwardRef((props: Props, ref) => {
             className="bg-black w-[300px] h-[180px] object-cover hoverimg"
             priority={true}
             placeholder="blur"
-            blurDataURL={"/feed/slider_img_nophoto.jpg"}
+            blurDataURL={"/assets/image/common/slider_img_nophoto.jpg"}
             unoptimized={true}
           />
         </div>

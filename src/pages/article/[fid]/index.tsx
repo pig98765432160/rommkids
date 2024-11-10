@@ -5,14 +5,19 @@ import { Role_MM, Role_RO } from "@/components/Icons/character";
 import { renderToStaticMarkup } from "react-dom/server";
 import { getFeedDetail } from "@/helpers/apis/feedApi";
 import { handleErrorResponse } from "@/lib/utils";
+import dayjs from "dayjs";
+import { Divider } from "@mui/material";
+import { FeedDetail } from "@/shared/types/Feed";
 
 interface Props {
-  feedDetail: any;
+  feedDetail: FeedDetail;
 }
 
 const ArticlePage: NextPage<Props> = (props) => {
   const { feedDetail } = props;
-  const [article, setArticle] = useState(feedDetail.content);
+  const [article, setArticle] = useState("");
+  const [author, setAuthor] = useState("");
+  const [createdAt, setCreatedAt] = useState("");
 
   useEffect(() => {
     const svg_ro = renderToStaticMarkup(
@@ -27,10 +32,12 @@ const ArticlePage: NextPage<Props> = (props) => {
       </span>
     );
 
-    let replaced = article.replace(/A:/g, svg_mm);
+    let replaced = feedDetail.content.replace(/A:/g, svg_mm);
     replaced = replaced.replace(/B:/g, svg_ro);
 
     setArticle(replaced);
+    setAuthor(feedDetail.author);
+    setCreatedAt(dayjs(feedDetail.created_at).format("YYYY/MM/DD"));
   }, [feedDetail]);
 
   return (
@@ -42,6 +49,7 @@ const ArticlePage: NextPage<Props> = (props) => {
           alt="article_cover"
           width={2560}
           height={1536}
+          className="rounded-t"
           blurDataURL="/assets/image/common/logo.png"
           priority
           unoptimized
@@ -49,9 +57,27 @@ const ArticlePage: NextPage<Props> = (props) => {
       </div>
       <div className="p-5">
         <h2 className="text-3xl font-black text-brown mb-5">
-          討論話題：{feedDetail.title}
+          {feedDetail.title}
         </h2>
-        <div dangerouslySetInnerHTML={{ __html: article }} />
+        <div className="flex items-center gap-2">
+          <div className="border border-gray-400 rounded-full p-1">
+            <Role_MM width={40} height={40} className="" />
+          </div>
+          <span className="flex flex-col">
+            <p className="text-lg font-black">{author}</p>
+            <p className="text-xs text-gray-500">{createdAt}</p>
+          </span>
+        </div>
+        <Divider
+          sx={{
+            width: "100%",
+            marginY: 2,
+          }}
+        />
+        <div
+          className="article"
+          dangerouslySetInnerHTML={{ __html: article }}
+        />
       </div>
     </>
   );
