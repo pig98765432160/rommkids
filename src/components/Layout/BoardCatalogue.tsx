@@ -1,16 +1,4 @@
 import { useRouter } from "next/router";
-import Image from "next/image";
-import { FC, useContext, useEffect, useState } from "react";
-import {
-  IconButton,
-  Menu,
-  Avatar,
-  Divider,
-  Skeleton,
-  Backdrop,
-  Tooltip,
-} from "@mui/material";
-import Link from "next/link";
 
 const BoardCatalogue = () => {
   const router = useRouter();

@@ -12,8 +12,14 @@
     @apply bg-white border-2 border-black rounded-full
   }
 
-  .icon-hover path {
+  .icon-primary path {
     fill: theme("colors.primary")
+  }
+  .icon-hot path {
+    fill: theme("colors.hot")
+  }
+  .icon-hot circle {
+    fill: theme("colors.hot")
   }
   .icon-cute-yellow path {
     fill: theme("colors.cute-yellow")

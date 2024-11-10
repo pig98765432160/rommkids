@@ -2,7 +2,6 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { PageMetadata } from "@/components/PageMetadata";
 import { BASE_URL } from "@/shared/constants";
-import ErrorComponent from "@/components/ErrorComponent";
 import { FeedList } from "@/components/Feed";
 import { fetchFeed, getFeedDetail } from "@/helpers/apis/feedApi";
 import { useInfiniteQuery } from "react-query";

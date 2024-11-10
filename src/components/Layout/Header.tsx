@@ -1,15 +1,6 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { FC, useContext, useEffect, useState } from "react";
-import {
-  IconButton,
-  Menu,
-  Avatar,
-  Divider,
-  Skeleton,
-  Backdrop,
-  Tooltip,
-} from "@mui/material";
 import Link from "next/link";
 import { MenuItemBg } from "../Icons/menuItemIcon";
 
@@ -17,8 +8,8 @@ const Header: FC = () => {
   const router = useRouter();
 
   return (
-    <header className="head absolute top-0 left-0 w-full h-[130px] flex justify-between z-50 bg-white">
-      <h1 className="absolute top-0 left-0 w-72 h-[200px] z-10 bg-white rounded-br-[50px]">
+    <header className="head absolute top-0 left-0 w-full h-[100px] flex justify-between z-50 bg-white">
+      <h1 className="absolute top-0 left-0 w-72 h-[160px] z-10 bg-white rounded-br-[50px]">
         <Link
           href="/"
           className="w-full h-full flex items-center justify-center p-3"

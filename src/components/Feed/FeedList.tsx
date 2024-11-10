@@ -1,13 +1,5 @@
 import { FeedItem } from "@/components/Feed";
-import {
-  FC,
-  Fragment,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { FC, Fragment, useCallback, useRef } from "react";
 import { useRouter } from "next/router";
 import { FeedItemLoading } from "@/components/Loading";
 
@@ -61,11 +53,6 @@ const FeedList: FC<Props> = (props) => {
           )}
           {isFetching && !isError && <FeedItemLoading />}
           {isError && <p className="text-hot text-center mt-5">請重新整理</p>}
-          {!hasNextPage && (
-            <p className="text-gray-900 lg:text-white text-center mt-5">
-              沒更多文章囉
-            </p>
-          )}
         </>
       ) : (
         Array.from({ length: 10 }).map((_, index) => (

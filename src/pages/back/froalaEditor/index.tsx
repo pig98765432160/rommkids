@@ -37,7 +37,7 @@ const NewPostPage: FC<Props> = (props) => {
         ogImage={`${BASE_URL}/img/brand.jpg`}
         ogType="website"
       />
-      <article className="w-full flex items-center justify-center bg-cute-beige mt-8 lg:mt-[130px]">
+      <article className="w-full flex items-center justify-center bg-cute-beige mt-8 lg:mt-[100px]">
         <Post initialState={initialState} />
       </article>
     </>

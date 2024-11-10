@@ -1,7 +1,11 @@
 import { FC, useMemo, createContext, useRef, useContext } from "react";
 import { useRouter } from "next/router";
-import { FeedLayout, Footer, Header } from "@/components/Layout";
 import BoardCatalogue from "./BoardCatalogue";
+import dynamic from "next/dynamic";
+
+const FeedLayout = dynamic(() => import("@/components/Layout/FeedLayout"));
+const Header = dynamic(() => import("@/components/Layout/Header"));
+const Footer = dynamic(() => import("@/components/Layout/Footer"));
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -14,9 +18,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
   const getLayout = () => {
     switch (rootPath) {
       case "login":
-        return <>{children}</>;
       case "404":
-        return <>{children}</>;
       case "500":
         return <>{children}</>;
       case "forums":
@@ -24,7 +26,6 @@ const Layout: FC<LayoutProps> = ({ children }) => {
         return (
           <>
             <Header />
-
             <FeedLayout>{children}</FeedLayout>
             <Footer />
           </>
