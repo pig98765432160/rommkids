@@ -1,35 +1,30 @@
-import { FC, forwardRef } from "react";
-import Image from "next/image";
+import { FC, forwardRef, Ref, useEffect, useState } from "react";
 import Link from "next/link";
+import { ErrorCover } from "@/components/Common";
 
 interface Props {
-  ref?: any;
+  ref?: Ref<HTMLDivElement>;
   feed: any;
 }
 
 const FeedItem: FC<Props> = forwardRef((props: Props, ref) => {
   const { feed } = props;
+
   return (
     <Link
       href={`/article/${feed.fid}`}
       className="relative w-full flex items-center gap-4 p-4 image-box border-b border-gray-300"
     >
-      {feed.cover && (
-        <div className="flex-shrink-0 w-[300px] h-[180px] overflow-hidden">
-          <Image
-            loader={({ src }) => src}
-            width={172}
-            height={99}
-            src={feed.cover}
-            alt="thumbnail"
-            className="bg-black w-[300px] h-[180px] object-cover hoverimg"
-            priority={true}
-            placeholder="blur"
-            blurDataURL={"/assets/image/common/slider_img_nophoto.jpg"}
-            unoptimized={true}
-          />
-        </div>
-      )}
+      <div className="flex-shrink-0 w-[300px] h-[180px] overflow-hidden">
+        <ErrorCover
+          src={feed.cover}
+          alt="thumbnail"
+          width={172}
+          height={99}
+          className="bg-black w-[300px] h-[180px] object-cover hoverimg"
+          errorImg="/assets/image/common/slider_img_nophoto.jpg"
+        />
+      </div>
       <div className="h-full flex flex-col justify-between">
         <div className="flex flex-col gap-3">
           <h2 className="text-2xl font-black text-brown break-all line-clamp-2">

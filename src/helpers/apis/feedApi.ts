@@ -8,8 +8,8 @@ import {
 } from "../baseAxios";
 
 // 取得貼文列表
-export const fetchFeed = () => {
-  return axiosGet("feeds");
+export const fetchFeed = (c_type?: string) => {
+  return axiosGet("feeds", { c_type });
 };
 
 // 新增貼文

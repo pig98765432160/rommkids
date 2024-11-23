@@ -1,4 +1,4 @@
-import YouTubeEmbed from "@/components/Common";
+import { YoutubeEmbed } from "@/components/Common";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -41,9 +41,9 @@ export default function Home() {
           ROMM DAILY
         </h2>
         <div className="home-yt grid grid-cols-3 gap-3 justify-items-center px-40">
-          <YouTubeEmbed videoId="C9vvN2zo-MY" />
-          <YouTubeEmbed videoId="C9vvN2zo-MY" />
-          <YouTubeEmbed videoId="-Pg9U8YjRFY" />
+          <YoutubeEmbed videoId="C9vvN2zo-MY" />
+          <YoutubeEmbed videoId="C9vvN2zo-MY" />
+          <YoutubeEmbed videoId="-Pg9U8YjRFY" />
         </div>
         <div className="w-full flex items-center justify-center">
           <button className="bg-brown text-white font-black rounded px-12 py-2">

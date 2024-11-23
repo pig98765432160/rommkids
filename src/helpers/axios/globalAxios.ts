@@ -38,7 +38,6 @@ export const axiosPost = (url: string, payload: any) => {
   return axiosBase
     .post(url, payload)
     .then((res) => {
-      debugger;
       return res?.data;
     })
     .catch((error) => {

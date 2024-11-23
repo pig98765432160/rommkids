@@ -1,8 +1,8 @@
 import { FC, ReactNode } from "react";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import { EnvelopeIcon, FBIcon, IGIcon, YTIcon } from "../Icons/icons";
 import Link from "next/link";
+import { ErrorCover } from "@/components/Common";
 
 interface Props {
   children: ReactNode;
@@ -11,7 +11,6 @@ interface Props {
 const FeedLayout: FC<Props> = (props) => {
   const { children } = props;
   const router = useRouter();
-  const { pathname } = useRouter();
 
   const forumsCats = [
     {
@@ -21,7 +20,7 @@ const FeedLayout: FC<Props> = (props) => {
     },
     {
       id: 1,
-      c_type: "live",
+      c_type: "life",
       name: "生活",
     },
     {
@@ -50,7 +49,8 @@ const FeedLayout: FC<Props> = (props) => {
               key={item.id}
               href={item.id !== 0 ? `/forums?c=${item.c_type}` : "/forums"}
               className={`${
-                router.asPath.includes(item.c_type)
+                router.query.c === item.c_type ||
+                (!router.query.c && item.id === 0)
                   ? "border-b-4 border-white"
                   : ""
               } w-20 h-full flex items-center justify-center hover:bg-light-brown`}
@@ -60,17 +60,18 @@ const FeedLayout: FC<Props> = (props) => {
           ))}
         </ul>
         <div className="flex justify-between">
-          <article className="w-full lg:w-[630px] bg-white rounded">
+          <article className="w-full lg:max-w-[630px] bg-white rounded">
             {children}
           </article>
-          <div className="w-[300px] flex flex-col gap-5">
+          <div className="w-[300px] hidden lg:flex flex-col gap-5">
             <div className="w-full flex flex-col gap-4 bg-white rounded px-6 pt-12 pb-8">
-              <Image
-                src="/assets/image/common/intro.png"
-                alt="intro_img"
+              <ErrorCover
+                src={"/assets/image/common/intro.png"}
+                alt={"intro_img"}
                 width={358}
                 height={245}
                 className="w-full h-[172px]"
+                errorImg={"/assets/image/common/slider_img_nophoto.jpg"}
               />
               <span className="w-full text-center">
                 <h3 className="text-3xl text-brown font-black">關於我們</h3>

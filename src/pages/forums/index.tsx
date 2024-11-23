@@ -1,4 +1,4 @@
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
 import { PageMetadata } from "@/components/PageMetadata";
 import { BASE_URL } from "@/shared/constants";
@@ -8,20 +8,18 @@ import { useInfiniteQuery } from "react-query";
 import { EStatus } from "@/shared/types";
 import { useState } from "react";
 
-interface FeedProps {
-  feed: any;
-}
-
-const ForumsPage: NextPage<FeedProps> = (props) => {
-  const { feed } = props;
+const ForumsPage: NextPage = () => {
   const router = useRouter();
   const [isFetchError, setIsFetchError] = useState(false);
+  const queryType = router.query?.c
+    ? (router.query?.c as "" | "life" | "chat" | "parenting" | "games")
+    : "";
 
   const { data, isFetching, isError, hasNextPage, fetchNextPage } =
     useInfiniteQuery(
-      ["fetchFeed"],
+      ["fetchFeed", queryType],
       ({ pageParam = 1 }) =>
-        fetchFeed().then((res) => {
+        fetchFeed(queryType).then((res) => {
           if (res.status === EStatus.SUCCESS) {
             setIsFetchError(false);
             return res.data;
@@ -35,7 +33,7 @@ const ForumsPage: NextPage<FeedProps> = (props) => {
           return lastPage.length >= 20 ? allPages.length + 1 : undefined;
         },
         keepPreviousData: true,
-        staleTime: Infinity,
+        staleTime: 5 * 1000,
       }
     );
 
@@ -66,13 +64,3 @@ const ForumsPage: NextPage<FeedProps> = (props) => {
 };
 
 export default ForumsPage;
-
-export async function getServerSideProps() {
-  const feeds = await fetchFeed();
-
-  return {
-    props: {
-      feed: feeds.data,
-    },
-  };
-}

@@ -8,6 +8,7 @@ import { handleErrorResponse } from "@/lib/utils";
 import dayjs from "dayjs";
 import { Divider } from "@mui/material";
 import { FeedDetail } from "@/shared/types/Feed";
+import { ErrorCover } from "@/components/Common";
 
 interface Props {
   feedDetail: FeedDetail;
@@ -43,16 +44,13 @@ const ArticlePage: NextPage<Props> = (props) => {
   return (
     <>
       <div className="w-full h-auto">
-        <Image
-          loader={({ src }: any) => src}
+        <ErrorCover
           src={feedDetail.cover}
           alt="article_cover"
           width={2560}
           height={1536}
           className="rounded-t"
-          blurDataURL="/assets/image/common/logo.png"
-          priority
-          unoptimized
+          errorImg="/assets/image/common/slider_img_nophoto.jpg"
         />
       </div>
       <div className="p-5">
