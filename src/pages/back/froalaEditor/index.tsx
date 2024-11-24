@@ -15,10 +15,18 @@ interface Props {
   modifiedContent: ModifiedContent;
 }
 
+const init: Partial<NewPost> = {
+  title: "",
+  content: "",
+  author: "",
+  c_type: "",
+};
+
 const NewPostPage: FC<Props> = (props) => {
   const { content_id, modifiedContent } = props;
-  const [initialState, setInitialState] =
-    useState<Partial<NewPost>>(modifiedContent);
+  const [initialState, setInitialState] = useState<Partial<NewPost>>(
+    modifiedContent ? modifiedContent : init
+  );
 
   useEffect(() => {
     if (modifiedContent && modifiedContent.content) {
@@ -26,6 +34,7 @@ const NewPostPage: FC<Props> = (props) => {
         title: modifiedContent.title,
         content: modifiedContent.content,
       });
+    } else {
     }
   }, [modifiedContent]);
 

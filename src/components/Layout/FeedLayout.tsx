@@ -8,37 +8,37 @@ interface Props {
   children: ReactNode;
 }
 
+export const forumsCats = [
+  {
+    id: 0,
+    c_type: "",
+    name: "全部",
+  },
+  {
+    id: 1,
+    c_type: "life",
+    name: "生活",
+  },
+  {
+    id: 2,
+    c_type: "chat",
+    name: "閒聊",
+  },
+  {
+    id: 3,
+    c_type: "parenting",
+    name: "親子",
+  },
+  {
+    id: 4,
+    c_type: "games",
+    name: "遊戲",
+  },
+];
+
 const FeedLayout: FC<Props> = (props) => {
   const { children } = props;
   const router = useRouter();
-
-  const forumsCats = [
-    {
-      id: 0,
-      c_type: "",
-      name: "全部",
-    },
-    {
-      id: 1,
-      c_type: "life",
-      name: "生活",
-    },
-    {
-      id: 2,
-      c_type: "chat",
-      name: "閒聊",
-    },
-    {
-      id: 3,
-      c_type: "parenting",
-      name: "親子",
-    },
-    {
-      id: 4,
-      c_type: "games",
-      name: "遊戲",
-    },
-  ];
 
   return (
     <div className="w-full relative flex justify-center py-[100px] bg-cute-beige">

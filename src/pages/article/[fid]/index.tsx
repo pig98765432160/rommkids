@@ -38,7 +38,7 @@ const ArticlePage: NextPage<Props> = (props) => {
 
     setArticle(replaced);
     setAuthor(feedDetail.author);
-    setCreatedAt(dayjs(feedDetail.created_at).format("YYYY/MM/DD"));
+    setCreatedAt(dayjs(feedDetail.dateline * 1000).format("YYYY/MM/DD HH:MM"));
   }, [feedDetail]);
 
   return (

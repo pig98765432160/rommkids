@@ -27,7 +27,7 @@ const FeedList: FC<Props> = (props) => {
       });
       if (node) observer.current.observe(node);
     },
-    [isFetching, hasNextPage]
+    [isFetching, hasNextPage, fetchNextPage]
   );
 
   return (

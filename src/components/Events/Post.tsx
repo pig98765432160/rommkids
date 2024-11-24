@@ -13,6 +13,7 @@ import { EStatus } from "@/shared/types/Status";
 import { errorAlert, successAlert } from "@/helpers/baseAxios";
 import FroalaEditor from "./FroalaEditor";
 import { addNewFeed } from "@/helpers/apis/feedApi";
+import SelectType from "./SelectType";
 
 interface Props {
   initialState: any;
@@ -23,6 +24,7 @@ export enum ActionType {
   SET_TITLE = "SET_TITLE",
   SET_CONTENT = "SET_CONTENT",
   SET_AUTHOR = "SET_AUTHOR",
+  SET_TYPE = "SET_TYPE",
 }
 
 export interface Action {
@@ -38,6 +40,8 @@ const reducer = (state: any, action: Action) => {
       return { ...state, content: action.payload.content };
     case ActionType.SET_AUTHOR:
       return { ...state, author: action.payload.author };
+    case ActionType.SET_TYPE:
+      return { ...state, c_type: action.payload.c_type };
     default:
       return state;
   }
@@ -57,6 +61,7 @@ const Post: FC<Props> = (props) => {
       title: state?.title,
       content: state?.content,
       author: state?.author,
+      c_type: state?.c_type,
     };
     try {
       postSchema
@@ -64,6 +69,7 @@ const Post: FC<Props> = (props) => {
           title: true,
           content: true,
           author: true,
+          c_type: true,
         })
         .parse(post);
       return true;
@@ -86,17 +92,26 @@ const Post: FC<Props> = (props) => {
     if (!isValidate) {
       setIsEdit(true);
       if (!state.title) {
-        errorAlert("沒有輸入標題");
+        alert("沒有輸入標題");
       } else if (!state.content) {
-        errorAlert("沒有輸入內容");
+        alert("沒有輸入內容");
       } else if (!state.author) {
-        errorAlert("沒有輸入作者名字");
+        alert("沒有輸入作者名字");
+      } else if (!state.c_type) {
+        alert("沒有選擇分類");
       }
     } else {
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = state.content;
+      const plainText = tempDiv.textContent || tempDiv.innerText || "";
+      const previewText = plainText.slice(0, 30);
+
       let post = {
         title: state.title,
         content: state.content,
         author: state.author,
+        desc: previewText,
+        c_type: state.c_type,
       };
       setIsEdit(false);
       if (feedId) {
@@ -128,7 +143,6 @@ const Post: FC<Props> = (props) => {
         }
       }
     }
-    console.log(state);
     setBtnIsLoading(false);
   };
 
@@ -144,7 +158,11 @@ const Post: FC<Props> = (props) => {
         <span className="w-full flex items-center gap-2">
           <p className="shrink-0">標題：</p>
           <TextField
-            inputProps={{ maxLength: 100 }}
+            slotProps={{
+              htmlInput: {
+                maxLength: 100,
+              },
+            }}
             sx={{
               flex: 1,
               marginY: "12px",
@@ -180,7 +198,11 @@ const Post: FC<Props> = (props) => {
         <span className="w-full flex items-center gap-2">
           <p className="shrink-0">作者：</p>
           <TextField
-            inputProps={{ maxLength: 100 }}
+            slotProps={{
+              htmlInput: {
+                maxLength: 100,
+              },
+            }}
             sx={{
               flex: 1,
               marginY: "12px",
@@ -220,13 +242,13 @@ const Post: FC<Props> = (props) => {
           setIsEdit={setIsEdit}
           setEditorLoading={setEditorLoading}
         />
-
+        <SelectType dispatch={postDispatch} c_type={state?.c_type} />
         <button
           type="submit"
           className={`${
             editorLoading ? "bg-gray-400" : "bg-primary hover:bg-primary-hover"
           } hidden md:block w-full text-white rounded py-3 my-5`}
-          disabled={btnIsLoading || editorLoading}
+          // disabled={btnIsLoading || editorLoading}
         >
           {btnIsLoading ? (
             <div className="w-full flex justify-center items-center">

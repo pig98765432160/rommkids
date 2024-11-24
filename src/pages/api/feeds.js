@@ -144,31 +144,30 @@ async function handlePost(req, res) {
   //   res.status(500).json({ message: 'Database error', error });
   // }
   const { newPost } = req.body;
+  if (!newPost.title || !newPost.content || !newPost.author) {
+    return res.status(400).json({ message: 'Invalid request body' });
+  }
 
-    if (!newPost.title || !newPost.content || !newPost.author) {
-      return res.status(400).json({ message: 'Invalid request body' });
-    }
-
-    try {
+  try {
+    const id = await getNextId();
+    const article = {
+      fid: id,
+      c_type: newPost.c_type,
+      title: newPost.title,
+      content:newPost.content,
+      desc: newPost.desc,
+      author: newPost.author,
+      dateline: Math.floor(Date.now() / 1000),
+      cover: `/assets/image/article/cover_${id}.png`
+    };
       
-      const id = await getNextId();
-      const article = {
-        fid: id,
-        title: newPost.title,
-        content:newPost.content,
-        desc: newPost.content.substr(0, 20),
-        author: newPost.author,
-        dateline: new Date().toISOString(),
-        cover: `/assets/image/article/cover_${id}.png`
-      };
-        
-      const filePath = path.join(articlesDir, `${id}.json`);
-      await fs.writeFile(filePath, JSON.stringify(article, null, 2));
+    const filePath = path.join(articlesDir, `${id}.json`);
+    await fs.writeFile(filePath, JSON.stringify(article, null, 2));
 
-      res.status(200).json({ status: 'success', data: article });
-    } catch (err) {
-      res.status(500).json({ message: 'Failed to save article', error: err.message });
-    }
+    res.status(200).json({ status: 'success', data: article });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to save article', error: err.message });
+  }
 }
 
 async function handlePut(req, res) {
