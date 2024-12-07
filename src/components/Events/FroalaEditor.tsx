@@ -123,6 +123,7 @@ const FroalaEditor: FC<Props> = (props) => {
           // imageInsertButtons: ["imageBack", "|", "imageUpload", "imageByURL"],
           // videoUpload: false,
           charCounterCount: false,
+          wordCounterCount: false,
           attribution: false,
           linkAlwaysBlank: true,
           linkAlwaysNoFollow: true,
@@ -134,23 +135,6 @@ const FroalaEditor: FC<Props> = (props) => {
             "background-color",
           ],
           pasteAllowedStyleProps: ["font-size", "color"],
-          fontSize: [
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "14",
-            "16",
-            "18",
-            "24",
-            "30",
-            "48",
-            "60",
-            "72",
-            "96",
-          ],
-          PluginsEnabled: ["codeView", "codeBeautifier"],
           codeBeautifierOptions: {
             end_with_newline: true,
             indent_inner_html: true,
@@ -162,23 +146,6 @@ const FroalaEditor: FC<Props> = (props) => {
             wrap_line_length: 0,
           },
           events: {
-            "image.beforeUpload": function (images: any) {
-              // @ts-ignore
-              this.image.showProgressBar();
-
-              setEditorLoading(true);
-            },
-            "image.uploaded": function (response: any) {
-              // @ts-ignore
-              this.image.hideProgressBar();
-
-              setEditorLoading(false);
-            },
-
-            "image.error": function (error: any) {
-              setEditorLoading(false);
-            },
-
             initialized: function () {
               setIsEdit(false);
             },

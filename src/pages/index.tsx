@@ -42,8 +42,8 @@ export default function Home() {
         </h2>
         <div className="home-yt grid grid-cols-3 gap-3 justify-items-center px-40">
           <YoutubeEmbed videoId="C9vvN2zo-MY" />
-          <YoutubeEmbed videoId="C9vvN2zo-MY" />
           <YoutubeEmbed videoId="-Pg9U8YjRFY" />
+          <YoutubeEmbed videoId="97cfOQs7zhw" />
         </div>
         <div className="w-full flex items-center justify-center">
           <button className="bg-brown text-white font-black rounded px-12 py-2">

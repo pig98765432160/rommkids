@@ -102,7 +102,7 @@ async function handleGet(req, res) {
       );
 
       if (c_type) {
-        articles = articles.filter((article) => article.type === c_type);
+        articles = articles.filter((article) => article.c_type === c_type);
       }
       res.status(200).json({ status: 'success', data: articles });
     }
