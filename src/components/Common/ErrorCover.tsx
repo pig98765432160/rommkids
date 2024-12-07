@@ -24,7 +24,6 @@ const ErrorCover: FC<Props> = (props) => {
 
   return (
     <Image
-      loader={({ src }) => src}
       width={width}
       height={height}
       src={imgSrc}
@@ -39,7 +38,6 @@ const ErrorCover: FC<Props> = (props) => {
           setHasError(true);
         }
       }}
-      unoptimized={true}
     />
   );
 };
