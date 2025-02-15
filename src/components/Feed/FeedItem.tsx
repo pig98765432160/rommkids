@@ -1,6 +1,6 @@
 import { FC, forwardRef, Ref, useEffect, useState } from "react";
 import Link from "next/link";
-import { ErrorCover } from "@/components/Common";
+import { ImageWithFallback } from "@/components/Common";
 
 interface Props {
   ref?: Ref<HTMLDivElement>;
@@ -16,13 +16,16 @@ const FeedItem: FC<Props> = forwardRef((props: Props, ref) => {
       className="relative w-full flex items-center gap-4 p-4 image-box border-b border-gray-300"
     >
       <div className="flex-shrink-0 w-[300px] h-[180px] overflow-hidden">
-        <ErrorCover
-          src={feed.cover}
+        <ImageWithFallback
+          src={feed.cover_url as string}
           alt="thumbnail"
           width={172}
           height={99}
           className="bg-black w-[300px] h-[180px] object-cover hoverimg"
-          errorImg="/assets/image/common/slider_img_nophoto.jpg"
+          isBlur={true}
+          fallbackSrc="/assets/image/common/slider_img_nophoto.jpg"
+          priority={false}
+          loading="lazy"
         />
       </div>
       <div className="h-full flex flex-col justify-between">

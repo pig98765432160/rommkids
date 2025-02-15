@@ -1,44 +1,6 @@
-import connection from '@/lib/db';
-import fs from 'fs/promises';
-import path from 'path';
-
-const articlesDir = path.join(process.cwd(), 'data', 'articles');
-const counterPath = path.join(process.cwd(), 'data', 'counter.json')
-
-
-// 确保目录和计数器文件存在
-const ensureResources = async () => {
-  try {
-    await fs.mkdir(articlesDir, { recursive: true });
-
-    try {
-      await fs.access(counterPath);
-    } catch {
-      await fs.writeFile(counterPath, JSON.stringify({ count: 0 }));
-    }
-  } catch (err) {
-    console.error('Error ensuring resources:', err);
-  }
-};
-
-// 获取当前计数器值并递增
-const getNextId = async () => {
-  try {
-    const counterData = await fs.readFile(counterPath, 'utf8');
-    const { count } = JSON.parse(counterData);
-    const newCount = count + 1;
-
-    await fs.writeFile(counterPath, JSON.stringify({ count: newCount }));
-    return newCount;
-  } catch (err) {
-    console.error('Error getting next ID:', err);
-    throw new Error('Failed to get next ID');
-  }
-};
+import { db, storage } from "@/lib/db";
 
 export default async function handler(req, res) {
-   await ensureResources();
-
   switch (req.method) {
     case 'GET':
       return handleGet(req, res);
@@ -54,144 +16,99 @@ export default async function handler(req, res) {
   }
 }
 
-async function handleGet(req, res) {
-  const { fid, c_type } = req.query;
-  // try {
-  //   let [rows] = []
-  //   if(fid) {
-  //     [rows] = await connection.query('SELECT * FROM feed WHERE fid = ?', [fid]);
-  //     res.status(200).json({
-  //       status: "success",
-  //       data: rows[0]
-  //     });
-      
-  //   } else {
-  //     [rows] = await connection.query('SELECT * FROM feed');
-  //     if([rows].length === 0) {
-  //       res.status(200).json({
-  //         status: 204,
-  //         data: []
-  //       });
-  //     } else {
-  //       res.status(200).json({
-  //         status: "success",
-  //         data: rows
-  //       });
-  //     }
-  //   }
-   
+async function getNextFid() {
+  const counterRef = db.collection("counters").doc("articles");
+  const doc = await counterRef.get();
 
-  // } catch (error) {
-  //   res.status(500).json({ message: 'Database error', error });
-  // }
+  if (!doc.exists) {
+    await counterRef.set({ count: 1 });
+    return 1;
+  } else {
+    const newFid = doc.data().count + 1;
+    await counterRef.update({ count: newFid });
+    return newFid;
+  }
+}
+
+
+// 取得文章
+async function handleGet(req, res) {
+  const { fid } = req.query;
+
   try {
     if (fid) {
-      const filePath = path.join(articlesDir, `${fid}.json`);
-      const fileContent = await fs.readFile(filePath, 'utf8');
-      const article = JSON.parse(fileContent);
+      const doc = await db.collection("articles").doc(fid).get();
+      if (!doc.exists) return res.status(404).json({ message: "文章不存在" });
 
-      res.status(200).json({ status: 'success', data: article });
+      res.status(200).json({ status: "success", data: doc.data() });
     } else {
-      // 返回所有文章
-      const files = await fs.readdir(articlesDir);
-      let articles = await Promise.all(
-        files.map(async (file) => {
-          const fileContent = await fs.readFile(path.join(articlesDir, file), 'utf8');
-          return JSON.parse(fileContent);
-        })
-      );
+      const snapshot = await db.collection("articles").orderBy("fid", "asc").get();
+      const articles = snapshot.docs.map(doc => doc.data());
 
-      if (c_type) {
-        articles = articles.filter((article) => article.c_type === c_type);
-      }
-      res.status(200).json({ status: 'success', data: articles });
+      res.status(200).json({ status: "success", data: articles });
     }
   } catch (err) {
-    res.status(500).json({ message: 'Failed to fetch articles', error: err.message });
+    res.status(500).json({ message: "取得文章失敗", error: err.message });
   }
 }
 
+
+// 新增文章
 async function handlePost(req, res) {
-  // const { newPost } = req.body;
-  // try {
-  //   const [result] = await connection.query(`
-  //     INSERT INTO feed (title, content, \`desc\`, author, dateline)
-  //     VALUES (?, ?, ?, ?, UNIX_TIMESTAMP())`,
-  //     [newPost.title, newPost.content, newPost.content.substr(0, 20), newPost.author]
-  //   );
+   const { newPost } = req.body;
+    debugger
 
-  //   const insertId = result.insertId;
-
-  //   const coverPath = `/assets/image/article/cover_${insertId}.png`;
-  //   await connection.query(`
-  //     UPDATE feed SET cover = ? WHERE fid = ?`,
-  //     [coverPath, insertId]
-  //   );
-
-  //   res.status(200).json({
-  //     status: "success",
-  //     data: {
-  //       fid: insertId,
-  //       title: newPost.title,
-  //       content: newPost.content,
-  //       desc: newPost.content.substr(0, 20),
-  //       cover: coverPath,
-  //       author: newPost.author,
-  //       dateline: Date.now(),
-  //     },
-  //   });
-  // } catch (error) {
-  //   res.status(500).json({ message: 'Database error', error });
-  // }
-  const { newPost } = req.body;
   if (!newPost.title || !newPost.content || !newPost.author) {
-    return res.status(400).json({ message: 'Invalid request body' });
+    return res.status(400).json({ message: "請提供完整的文章內容" });
   }
 
   try {
-    const id = await getNextId();
-    const article = {
-      fid: id,
-      c_type: newPost.c_type,
-      title: newPost.title,
+    const fid = await getNextFid(); // 取得自增 `fid`
+    const cover_url = `/assets/image/article/cover_${fid}.png`;
+
+    await db.collection("articles").doc(String(fid)).set({
+      fid,
+      title:newPost.title,
       content:newPost.content,
-      desc: newPost.desc,
-      author: newPost.author,
+      author:newPost.author,
+      cover_url,
       dateline: Math.floor(Date.now() / 1000),
-      cover: `/assets/image/article/cover_${id}.png`
-    };
-      
-    const filePath = path.join(articlesDir, `${id}.json`);
-    await fs.writeFile(filePath, JSON.stringify(article, null, 2));
+    });
 
-    res.status(200).json({ status: 'success', data: article });
+    return res.status(200).json({ status: "success", data: { fid, title:newPost.title, content:newPost.content, author:newPost.author, cover_url } });
+    // res.status(200).json({ status: "success", data: { fid, title, content, author, cover_url } });
   } catch (err) {
-    res.status(500).json({ message: 'Failed to save article', error: err.message });
+    res.status(500).json({ message: "儲存文章失敗", error: err.message });
   }
 }
 
+
+
+// 更新文章
 async function handlePut(req, res) {
-  const { id, title, content } = req.body;
+  const { fid, title, content } = req.body;
+  if (!fid) return res.status(400).json({ message: "請提供文章 fid" });
+
   try {
-    await connection.query('UPDATE feed SET title = ?, content = ? WHERE id = ?', [title, content, id]);
-    res.status(200).json({
-      status: "success",
-      message: "Record updated successfully",
-    });
+    await db.collection("articles").doc(fid).update({ title, content });
+
+    res.status(200).json({ status: "success", message: "更新成功" });
   } catch (error) {
-    res.status(500).json({ message: 'Database error', error });
+    res.status(500).json({ message: "更新失敗", error });
   }
 }
 
+
+// 刪除文章
 async function handleDelete(req, res) {
-  const { id } = req.body;
+  const { fid } = req.body;
+  if (!fid) return res.status(400).json({ message: "請提供文章 fid" });
+
   try {
-    await connection.query('DELETE FROM feed WHERE id = ?', [id]);
-    res.status(200).json({
-      status: "success",
-      message: "Record deleted successfully",
-    });
+    await db.collection("articles").doc(fid).delete();
+    res.status(200).json({ status: "success", message: "刪除成功" });
   } catch (error) {
-    res.status(500).json({ message: 'Database error', error });
+    res.status(500).json({ message: "刪除失敗", error });
   }
 }
+

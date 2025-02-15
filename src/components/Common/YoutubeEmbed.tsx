@@ -8,11 +8,14 @@ const YouTubeEmbed: FC<Props> = (props) => {
   const { videoId } = props;
   return (
     <iframe
-      width="380"
-      height="211"
+      width="100%"
+      height="auto"
       src={`https://www.youtube.com/embed/${videoId}`}
       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
       allowFullScreen
+      style={{
+        aspectRatio: "16/9",
+      }}
     ></iframe>
   );
 };

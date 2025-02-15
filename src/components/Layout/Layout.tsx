@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 
 const FeedLayout = dynamic(() => import("@/components/Layout/FeedLayout"));
 const Header = dynamic(() => import("@/components/Layout/Header"));
+const SiteMenu = dynamic(() => import("@/components/Layout/SiteMenu"));
 const Footer = dynamic(() => import("@/components/Layout/Footer"));
 
 interface LayoutProps {
@@ -32,11 +33,11 @@ const Layout: FC<LayoutProps> = ({ children }) => {
         );
       default:
         return (
-          <>
+          <div className="data-content">
             <Header />
             {children}
             <Footer />
-          </>
+          </div>
         );
     }
   };

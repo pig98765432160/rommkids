@@ -8,7 +8,7 @@ import { handleErrorResponse } from "@/lib/utils";
 import dayjs from "dayjs";
 import { Divider } from "@mui/material";
 import { FeedDetail } from "@/shared/types/Feed";
-import { ErrorCover } from "@/components/Common";
+import { ImageWithFallback } from "@/components/Common";
 
 interface Props {
   feedDetail: FeedDetail;
@@ -44,13 +44,16 @@ const ArticlePage: NextPage<Props> = (props) => {
   return (
     <>
       <div className="w-full h-auto">
-        <ErrorCover
-          src={feedDetail.cover}
+        <ImageWithFallback
+          src={`/assets/image/article/cover_${feedDetail.fid}.png`}
           alt="article_cover"
           width={2560}
           height={1536}
           className="rounded-t"
-          errorImg="/assets/image/common/slider_img_nophoto.jpg"
+          isBlur={true}
+          fallbackSrc="/assets/image/common/slider_img_nophoto.jpg"
+          priority={false}
+          loading="lazy"
         />
       </div>
       <div className="p-5">
@@ -94,7 +97,7 @@ export const getServerSideProps: GetServerSideProps | any = async ({
     return handleErrorResponse(404);
   }
 
-  const feedDetail = await getFeedDetail(+fid);
+  const feedDetail = await getFeedDetail(fid);
 
   return {
     props: {

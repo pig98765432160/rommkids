@@ -9,6 +9,8 @@ module.exports = {
         popular: "#9200FF",
         hot: "#FF0000",
         brown: "#996510",
+        border: "#E0E0E0",
+        "dark-brown": "#4d2e0a",
         "light-brown": "#e1b46c",
         "romm-yellow": "#FFDC4B",
         "gray-100": "#F7F7F7",

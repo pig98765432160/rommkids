@@ -133,6 +133,7 @@ const Post: FC<Props> = (props) => {
       } else {
         const res = await addNewFeed(post);
         if (res.status === EStatus.SUCCESS) {
+          debugger;
           console.log(res);
           setIsFinish(true);
 

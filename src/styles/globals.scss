@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "./head.scss";
-
 @layer components {
   .block-primary {
     @apply rounded flex flex-col shadow bg-white
@@ -68,6 +66,15 @@ p {
   margin: 0;
 }
 
+:root {
+  --base: #F2F2EB;
+  // --base:#FAEFEB;
+  --header-height: 80px;
+}
+main {
+  background-color: var(--base);
+}
+
 // 滑鼠hover圖片放大
 .image-box {
   overflow: hidden;
@@ -82,6 +89,10 @@ p {
   transform: scale(1.1);
 }
 
+.data-content {
+  width: 100vw;
+}
+
 .card {
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 10px;
@@ -94,7 +105,7 @@ p {
 
 .home-yt {
   iframe {
-    border-radius: 20px;
+    border-radius: 1.5rem 1.5rem 0 0;
   }
 }
 

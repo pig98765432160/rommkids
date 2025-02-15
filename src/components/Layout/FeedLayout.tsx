@@ -2,7 +2,7 @@ import { FC, ReactNode } from "react";
 import { useRouter } from "next/router";
 import { EnvelopeIcon, FBIcon, IGIcon, YTIcon } from "../Icons/icons";
 import Link from "next/link";
-import { ErrorCover } from "@/components/Common";
+import { ImageWithFallback } from "@/components/Common";
 
 interface Props {
   children: ReactNode;
@@ -41,9 +41,9 @@ const FeedLayout: FC<Props> = (props) => {
   const router = useRouter();
 
   return (
-    <div className="w-full relative flex justify-center py-[100px] bg-cute-beige">
-      <div className="w-full lg:max-w-[960px] flex flex-col gap-5 mt-5">
-        <ul className="relative w-full h-[50px] flex items-center bg-brown text-white text-lg font-black px-8">
+    <div className="w-full relative flex justify-center py-[--header-height] bg-[--base]">
+      <div className="w-full lg:max-w-[960px] flex flex-col gap-5 mt-8">
+        {/* <ul className="relative w-full h-[50px] flex items-center bg-brown text-white text-lg font-black px-8">
           {forumsCats.map((item) => (
             <Link
               key={item.id}
@@ -58,20 +58,23 @@ const FeedLayout: FC<Props> = (props) => {
               <li>{item.name}</li>
             </Link>
           ))}
-        </ul>
+        </ul> */}
         <div className="flex justify-between">
           <article className="w-full lg:max-w-[630px] bg-white rounded">
             {children}
           </article>
           <div className="w-[300px] hidden lg:flex flex-col gap-5">
             <div className="w-full flex flex-col gap-4 bg-white rounded px-6 pt-12 pb-8">
-              <ErrorCover
-                src={"/assets/image/common/intro.png"}
-                alt={"intro_img"}
+              <ImageWithFallback
+                src="/assets/image/common/intro.png"
+                alt="intro_img"
                 width={358}
                 height={245}
                 className="w-full h-[172px]"
-                errorImg={"/assets/image/common/slider_img_nophoto.jpg"}
+                isBlur={true}
+                fallbackSrc="/assets/image/common/slider_img_nophoto.jpg"
+                priority={false}
+                loading="lazy"
               />
               <span className="w-full text-center">
                 <h3 className="text-3xl text-brown font-black">關於我們</h3>

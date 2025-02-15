@@ -1,2 +1,2 @@
 export { default as YoutubeEmbed } from "./YoutubeEmbed";
-export { default as ErrorCover } from "./ErrorCover";
+export { default as ImageWithFallback } from "./ImageWithFallback";

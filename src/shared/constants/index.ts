@@ -2,21 +2,6 @@ export const IS_PRODUCTION = process.env.NODE_ENV === "production";
 
 export const BASE_URL =
   process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-export const TWITCH_URL = "www2.league-funny.com" || "localhost:3000";
-
-export const API_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/service";
-export const API_IMAGE_URL = "https://img.league-funny.com";
-
-export const USER_COVER = `${API_IMAGE_URL}/user_cover${
-  IS_PRODUCTION ? "" : "_test"
-}`;
-export const TIMELINE_COVER = `${API_IMAGE_URL}/timeline_cover${
-  IS_PRODUCTION ? "" : "_test"
-}`;
-export const BOARD_ICON = `${API_IMAGE_URL}/board_icon${
-  IS_PRODUCTION ? "" : "_test"
-}`;
 
 export const HOST = process.env.NEXT_PUBLIC_HOST || "localhost";
 export const PORT = process.env.PORT || 3000;

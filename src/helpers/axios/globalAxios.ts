@@ -1,4 +1,4 @@
-import { API_URL, BASE_URL } from "@/shared/constants";
+import { BASE_URL } from "@/shared/constants";
 import { EStatus } from "@/shared/types/Status";
 import axios from "axios";
 

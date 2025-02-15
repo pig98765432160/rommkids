@@ -1,0 +1,14 @@
+.head {
+  width: 100vw;
+  z-index: 50;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: var(--base);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1rem 5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
