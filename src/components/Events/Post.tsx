@@ -14,6 +14,8 @@ import { errorAlert, successAlert } from "@/helpers/baseAxios";
 import FroalaEditor from "./FroalaEditor";
 import { addNewFeed } from "@/helpers/apis/feedApi";
 import SelectType from "./SelectType";
+import Tags from "./Tags";
+import SelectAuthor from "./SelectAuthor";
 
 interface Props {
   initialState: any;
@@ -24,7 +26,8 @@ export enum ActionType {
   SET_TITLE = "SET_TITLE",
   SET_CONTENT = "SET_CONTENT",
   SET_AUTHOR = "SET_AUTHOR",
-  SET_TYPE = "SET_TYPE",
+  SET_BOARD = "SET_BOARD",
+  SET_TAGS = "SET_TAGS",
 }
 
 export interface Action {
@@ -40,8 +43,10 @@ const reducer = (state: any, action: Action) => {
       return { ...state, content: action.payload.content };
     case ActionType.SET_AUTHOR:
       return { ...state, author: action.payload.author };
-    case ActionType.SET_TYPE:
-      return { ...state, c_type: action.payload.c_type };
+    case ActionType.SET_BOARD:
+      return { ...state, board: action.payload.board };
+    case ActionType.SET_TAGS:
+      return { ...state, tags: action.payload.tags };
     default:
       return state;
   }
@@ -61,7 +66,8 @@ const Post: FC<Props> = (props) => {
       title: state?.title,
       content: state?.content,
       author: state?.author,
-      c_type: state?.c_type,
+      board: state?.board,
+      tags: state?.tags,
     };
     try {
       postSchema
@@ -69,7 +75,7 @@ const Post: FC<Props> = (props) => {
           title: true,
           content: true,
           author: true,
-          c_type: true,
+          board: true,
         })
         .parse(post);
       return true;
@@ -89,16 +95,16 @@ const Post: FC<Props> = (props) => {
     setIsEdit(false);
     setBtnIsLoading(true);
 
-    if (!isValidate) {
+    if (state.tags?.length > 10 || !isValidate) {
       setIsEdit(true);
       if (!state.title) {
-        alert("沒有輸入標題");
+        errorAlert("沒有輸入標題");
       } else if (!state.content) {
-        alert("沒有輸入內容");
+        errorAlert("沒有輸入內容");
       } else if (!state.author) {
-        alert("沒有輸入作者名字");
-      } else if (!state.c_type) {
-        alert("沒有選擇分類");
+        errorAlert("沒有輸入作者名字");
+      } else if (!state.board) {
+        errorAlert("沒有選擇分類");
       }
     } else {
       const tempDiv = document.createElement("div");
@@ -111,7 +117,8 @@ const Post: FC<Props> = (props) => {
         content: state.content,
         author: state.author,
         desc: previewText,
-        c_type: state.c_type,
+        board: state.board,
+        ...(state.tags?.length > 0 && { tags: state.tags }),
       };
       setIsEdit(false);
       if (feedId) {
@@ -133,8 +140,6 @@ const Post: FC<Props> = (props) => {
       } else {
         const res = await addNewFeed(post);
         if (res.status === EStatus.SUCCESS) {
-          debugger;
-          console.log(res);
           setIsFinish(true);
 
           successAlert("新增文章成功！");
@@ -198,7 +203,7 @@ const Post: FC<Props> = (props) => {
         </span>
         <span className="w-full flex items-center gap-2">
           <p className="shrink-0">作者：</p>
-          <TextField
+          {/* <TextField
             slotProps={{
               htmlInput: {
                 maxLength: 100,
@@ -234,7 +239,8 @@ const Post: FC<Props> = (props) => {
                 payload: { author: e.target.value },
               });
             }}
-          />
+          /> */}
+          <SelectAuthor dispatch={postDispatch} author={state?.author} />
         </span>
 
         <FroalaEditor
@@ -243,7 +249,8 @@ const Post: FC<Props> = (props) => {
           setIsEdit={setIsEdit}
           setEditorLoading={setEditorLoading}
         />
-        <SelectType dispatch={postDispatch} c_type={state?.c_type} />
+        <Tags dispatch={postDispatch} />
+        <SelectType dispatch={postDispatch} board={state?.board} />
         <button
           type="submit"
           className={`${

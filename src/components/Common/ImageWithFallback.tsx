@@ -26,7 +26,9 @@ const ImageWithFallback: FC<Props> = (props) => {
     priority,
     isBlur,
     loading,
+    ...rest
   } = props;
+
   const [imgSrc, setImgSrc] = useState(src);
 
   useEffect(() => {
@@ -49,6 +51,7 @@ const ImageWithFallback: FC<Props> = (props) => {
           blurDataURL={fallbackSrc}
           priority={priority}
           loading={loading}
+          {...rest}
         />
       ) : (
         <Image
@@ -59,6 +62,7 @@ const ImageWithFallback: FC<Props> = (props) => {
           alt={fallbackSrc}
           unoptimized={true}
           loading={loading}
+          {...rest}
         />
       )}
     </>

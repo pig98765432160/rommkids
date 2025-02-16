@@ -92,3 +92,166 @@ export const EnvelopeIcon: FC<Props> = (props) => {
     </svg>
   );
 };
+
+export const CloseIcon: FC<Props> = (props) => {
+  const { width, height, className } = props;
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 14 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <g clipPath="url(#clip0_1072_6197)">
+        <path
+          d="M1 1.648c.013-.037.027-.072.039-.109a.776.776 0 0 1 1.248-.345c.048.04.091.086.135.13l4.473 4.478c.033.033.053.077.079.116l.05-.003c.027-.038.05-.082.082-.114 1.51-1.513 3.02-3.025 4.531-4.536.268-.268.61-.336.92-.187.45.217.583.79.274 1.183-.04.049-.084.093-.128.137L8.204 6.9c-.033.033-.07.061-.133.115.054.038.096.06.129.093l4.533 4.534c.204.204.307.442.25.73-.059.308-.245.507-.54.605-.018.007-.035.016-.053.024h-.351c-.225-.077-.387-.237-.55-.4-1.462-1.466-2.926-2.93-4.389-4.394l-.116-.111c-.036.046-.062.087-.094.12-1.469 1.47-2.938 2.939-4.405 4.41-.155.156-.312.302-.525.375H1.61c-.168-.06-.332-.13-.434-.282-.072-.108-.118-.234-.176-.352v-.258c.054-.235.203-.404.369-.57C2.847 10.063 4.323 8.584 5.8 7.107c.032-.032.076-.052.137-.093-.07-.056-.11-.082-.143-.115C4.32 5.424 2.847 3.947 1.37 2.475c-.166-.166-.315-.336-.371-.57v-.257z"
+          fill="#A0A0A0"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_1072_6197">
+          <path fill="#fff" transform="translate(1 1)" d="M0 0h12v12H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
+
+export const DeleteIcon: FC<Props> = (props) => {
+  const { width, height, className } = props;
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 37 36"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <path
+        d="M31.572 5.968h-4.625A7.473 7.473 0 0 0 19.637 0h-2.985a7.473 7.473 0 0 0-7.31 5.968H4.717a1.492 1.492 0 1 0 0 2.984h1.492v19.395a7.469 7.469 0 0 0 7.46 7.46h8.951a7.469 7.469 0 0 0 7.46-7.46V8.952h1.492a1.492 1.492 0 1 0 0-2.984zm-14.92 19.395a1.492 1.492 0 1 1-2.983 0V16.41a1.492 1.492 0 0 1 2.983 0v8.952zm5.968 0a1.492 1.492 0 1 1-2.984 0V16.41a1.492 1.492 0 0 1 2.984 0v8.952zM12.432 5.968a4.485 4.485 0 0 1 4.22-2.984h2.984a4.485 4.485 0 0 1 4.221 2.984H12.432z"
+        fill="#A0A0A0"
+      />
+    </svg>
+  );
+};
+
+export const QuestionIcon: FC<Props> = (props) => {
+  const { width, height, className } = props;
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 19 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <path
+        d="M18.25 9a9 9 0 0 1-9 9 9 9 0 0 1-9-9c0-4.969 4.03-9 9-9s9 4.031 9 9zM9.492 2.976c-1.978 0-3.24.833-4.23 2.314a.436.436 0 0 0 .098.59l1.26.954c.189.144.458.11.604-.077.649-.822 1.093-1.299 2.08-1.299.741 0 1.658.477 1.658 1.196 0 .544-.448.823-1.18 1.233-.854.479-1.984 1.075-1.984 2.565v.145c0 .24.195.435.436.435h2.032c.24 0 .436-.195.436-.435v-.049c0-1.033 3.018-1.075 3.018-3.87 0-2.105-2.183-3.702-4.228-3.702zm-.242 9c-.92 0-1.67.749-1.67 1.67 0 .92.75 1.668 1.67 1.668.92 0 1.67-.748 1.67-1.669 0-.92-.75-1.67-1.67-1.67z"
+        fill="#A0A0A0"
+      />
+    </svg>
+  );
+};
+
+export const ErrorIcon: FC<Props> = (props) => {
+  const { width, height, className } = props;
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 70 70"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <path
+        d="M67.5 35c0 17.95-14.55 32.5-32.5 32.5S2.5 52.95 2.5 35 17.05 2.5 35 2.5 67.5 17.05 67.5 35z"
+        fill="#fff"
+        stroke="#DFE3E8"
+        strokeWidth="5"
+      />
+      <path
+        d="M45.995 27.666l-7.332 7.335 7.332 7.334L42.33 46l-7.332-7.332L27.667 46 24 42.335 31.332 35 24 27.667 27.666 24l7.332 7.332L42.33 24l3.665 3.666z"
+        fill="red"
+      />
+    </svg>
+  );
+};
+
+export const SuccessIcon: FC<Props> = (props) => {
+  const { width, height, className } = props;
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={width}
+      height={height}
+      viewBox="0 0 70 70"
+      fill="none"
+      className={className}
+    >
+      <path
+        d="M67.5 35C67.5 52.9493 52.9493 67.5 35 67.5C17.0507 67.5 2.5 52.9493 2.5 35C2.5 17.0507 17.0507 2.5 35 2.5C52.9493 2.5 67.5 17.0507 67.5 35Z"
+        fill="white"
+        stroke="#DFE3E8"
+        strokeWidth="5"
+      />
+      <path
+        d="M47.8178 23.916L51.9125 28.0723L35.0168 44.7178C33.8875 45.8471 32.4041 46.409 30.9125 46.409C29.4209 46.409 27.9225 45.8402 26.7822 44.7027L18.668 36.84L22.7313 32.6482L30.877 40.5438L47.8205 23.916H47.8178Z"
+        fill="#68AA01"
+      />
+    </svg>
+  );
+};
+
+export const InfoIcon: FC<Props> = (props) => {
+  const { width, height, className } = props;
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 37 36"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <g clipPath="url(#clip0_745_5131)">
+        <path
+          d="M36.241 17.903A17.903 17.903 0 1 1 18.338 0a17.923 17.923 0 0 1 17.903 17.903zm-14.92 0a2.984 2.984 0 0 0-2.983-2.984h-2.984v2.984h2.984v10.444h2.984V17.903zM18.339 7.46a2.238 2.238 0 1 0 0 4.476 2.238 2.238 0 0 0 0-4.476z"
+          fill="#A0A0A0"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_745_5131">
+          <path
+            fill="#fff"
+            transform="translate(.435)"
+            d="M0 0h35.806v35.806H0z"
+          />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
+
+export const NoticeIcon: FC<Props> = (props) => {
+  const { width, height, className } = props;
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 14 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <path
+        d="M7 14a7 7 0 1 0-7-7 7.008 7.008 0 0 0 7 7zM6.417 3.5a.583.583 0 1 1 1.166 0v4.667a.583.583 0 1 1-1.166 0V3.5zm.583 7a.583.583 0 1 1 0 1.167.583.583 0 0 1 0-1.167z"
+        fill="#A0A0A0"
+      />
+    </svg>
+  );
+};

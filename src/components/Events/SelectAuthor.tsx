@@ -1,41 +1,43 @@
 import { FormControl, MenuItem, Select } from "@mui/material";
 import { Dispatch, FC, useState } from "react";
 import { ActionType } from "@/components/Events/Post";
-import { forumsCats } from "../Layout/FeedLayout";
 
 interface Props {
   dispatch: Dispatch<any>;
-  board: string;
+  author: string;
 }
 
-const SelectType: FC<Props> = (props) => {
-  const { dispatch, board } = props;
-  const [selectedTypeID, setSelectedTypeID] = useState<number>(0);
+const Author = [
+  { uid: 1, name: "嗄歐" },
+  { uid: 2, name: "麥麥" },
+];
 
-  const handleSelectType = (event: any) => {
-    console.log("event.target.value", event.target.value);
-    setSelectedTypeID(event.target.value);
+const SelectAuthor: FC<Props> = (props) => {
+  const { dispatch, author } = props;
+  const [selectedAuthorID, setSelectedAuthorID] = useState<number>(0);
 
-    const selectType = forumsCats?.find(
-      (item: any) => item.id === Number(event.target.value)
-    )?.board;
+  const handleSelectAuthor = (event: any) => {
+    setSelectedAuthorID(event.target.value);
+
+    const selectAuthor = Author?.find(
+      (item: any) => item.uid === Number(event.target.value)
+    )?.name;
 
     dispatch({
-      type: ActionType.SET_BOARD,
+      type: ActionType.SET_AUTHOR,
       payload: {
-        board: selectType,
+        author: selectAuthor,
       },
     });
   };
 
   return (
     <div className="w-full flex items-center gap-2 lg:my-3">
-      <span className="hidden md:inline-block font-bold">發文分類：</span>
       <FormControl sx={{ flex: 1 }}>
         <Select
           required
-          value={selectedTypeID}
-          onChange={handleSelectType}
+          value={selectedAuthorID}
+          onChange={handleSelectAuthor}
           displayEmpty
           inputProps={{ "aria-label": "Without label" }}
           sx={{
@@ -49,10 +51,10 @@ const SelectType: FC<Props> = (props) => {
           }}
         >
           <MenuItem disabled value={0} sx={{ fontSize: "15px" }}>
-            請選擇分類
+            請選擇作者
           </MenuItem>
-          {forumsCats.map((item: any) => (
-            <MenuItem value={item.id} key={item.id} sx={{ fontSize: "15px" }}>
+          {Author.map((item: any) => (
+            <MenuItem value={item.uid} key={item.uid} sx={{ fontSize: "15px" }}>
               {item.name}
             </MenuItem>
           ))}
@@ -62,4 +64,4 @@ const SelectType: FC<Props> = (props) => {
   );
 };
 
-export default SelectType;
+export default SelectAuthor;

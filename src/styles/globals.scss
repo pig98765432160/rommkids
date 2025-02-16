@@ -71,7 +71,8 @@ p {
   // --base:#FAEFEB;
   --header-height: 80px;
 }
-main {
+
+body {
   background-color: var(--base);
 }
 
@@ -90,7 +91,7 @@ main {
 }
 
 .data-content {
-  width: 100vw;
+  width: 100%;
 }
 
 .card {
@@ -126,6 +127,12 @@ main {
 }
 
 .article {
+  :where(p:not([class])) {
+    font-size: 1rem;
+    line-height: 180%;
+    margin-top: 1rem;
+  }
+
   iframe {
     width: 100%;
     height: 330px;

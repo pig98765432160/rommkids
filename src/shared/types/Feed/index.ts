@@ -1,11 +1,11 @@
 export interface FeedDetail {
   fid: number;
   author: string;
-  dateline: number;
-  created_at: string;
-  update_at: string;
+  createAt: number;
+  updateAt: number;
   title: string;
   content: string;
   desc: string;
   cover: string;
+  tags: string[];
 }

@@ -1,4 +1,4 @@
-import { db, storage } from "@/lib/db";
+import { db, } from "@/lib/db";
 
 export default async function handler(req, res) {
   switch (req.method) {
@@ -33,20 +33,32 @@ async function getNextFid() {
 
 // 取得文章
 async function handleGet(req, res) {
-  const { fid } = req.query;
+  // const { fid } = req.query;
+  const { board, tag, page = 1, limit = 10 } = req.query;
+  if (!board) {
+    return res.status(400).json({ message: "請提供 board 參數" });
+  }
 
   try {
-    if (fid) {
-      const doc = await db.collection("articles").doc(fid).get();
-      if (!doc.exists) return res.status(404).json({ message: "文章不存在" });
-
-      res.status(200).json({ status: "success", data: doc.data() });
-    } else {
-      const snapshot = await db.collection("articles").orderBy("fid", "asc").get();
-      const articles = snapshot.docs.map(doc => doc.data());
-
-      res.status(200).json({ status: "success", data: articles });
+    let query = db.collection("articles").where("board", "==", board);
+    if (tag) {
+      query = query.where("tags", "array-contains", tag);
     }
+    const snapshot = await query.limit(limit).offset((page - 1) * limit).get();
+    const articles = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    res.status(200).json({ status: "success", data: articles });
+
+    // if (fid) {
+    //   const doc = await db.collection("articles").doc(fid).get();
+    //   if (!doc.exists) return res.status(404).json({ message: "文章不存在" });
+
+    //   res.status(200).json({ status: "success", data: doc.data() });
+    // } else {
+      // const snapshot = await db.collection("articles").orderBy("fid", "asc").get();
+      // const articles = snapshot.docs.map(doc => doc.data());
+
+      // res.status(200).json({ status: "success", data: articles });
+    // }
   } catch (err) {
     res.status(500).json({ message: "取得文章失敗", error: err.message });
   }
@@ -55,9 +67,7 @@ async function handleGet(req, res) {
 
 // 新增文章
 async function handlePost(req, res) {
-   const { newPost } = req.body;
-    debugger
-
+  const { newPost } = req.body;
   if (!newPost.title || !newPost.content || !newPost.author) {
     return res.status(400).json({ message: "請提供完整的文章內容" });
   }
@@ -68,15 +78,18 @@ async function handlePost(req, res) {
 
     await db.collection("articles").doc(String(fid)).set({
       fid,
+      board:newPost.board,
       title:newPost.title,
       content:newPost.content,
+      desc:newPost.desc,
       author:newPost.author,
-      cover_url,
-      dateline: Math.floor(Date.now() / 1000),
+      createAt: Math.floor(Date.now() / 1000),
+      updateAt: Math.floor(Date.now() / 1000),
+      tags: newPost.tags || [],
+      cover:cover_url,
     });
 
-    return res.status(200).json({ status: "success", data: { fid, title:newPost.title, content:newPost.content, author:newPost.author, cover_url } });
-    // res.status(200).json({ status: "success", data: { fid, title, content, author, cover_url } });
+    return res.status(200).json({ status: "success", data: { fid } });
   } catch (err) {
     res.status(500).json({ message: "儲存文章失敗", error: err.message });
   }

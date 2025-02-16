@@ -11,15 +11,20 @@ import { useState } from "react";
 const ForumsPage: NextPage = () => {
   const router = useRouter();
   const [isFetchError, setIsFetchError] = useState(false);
-  const queryType = router.query?.c
-    ? (router.query?.c as "" | "life" | "chat" | "parenting" | "games")
+  const queryType = router.query?.board
+    ? (router.query?.board as "" | "knowledge" | "learn" | "funny" | "life")
     : "";
+
+  console.log("queryType", queryType);
 
   const { data, isFetching, isError, hasNextPage, fetchNextPage } =
     useInfiniteQuery(
       ["fetchFeed", queryType],
       ({ pageParam = 1 }) =>
-        fetchFeed(queryType).then((res) => {
+        fetchFeed({
+          board: queryType,
+          page: pageParam,
+        }).then((res) => {
           if (res.status === EStatus.SUCCESS) {
             setIsFetchError(false);
             return res.data;

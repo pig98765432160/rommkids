@@ -19,7 +19,7 @@ const init: Partial<NewPost> = {
   title: "",
   content: "",
   author: "",
-  c_type: "",
+  board: "",
 };
 
 const NewPostPage: FC<Props> = (props) => {

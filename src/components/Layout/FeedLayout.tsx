@@ -10,29 +10,24 @@ interface Props {
 
 export const forumsCats = [
   {
-    id: 0,
-    c_type: "",
-    name: "全部",
-  },
-  {
     id: 1,
-    c_type: "life",
-    name: "生活",
+    board: "knowledge",
+    name: "知識・科普",
   },
   {
     id: 2,
-    c_type: "chat",
-    name: "閒聊",
+    board: "learn",
+    name: "語言學習",
   },
   {
     id: 3,
-    c_type: "parenting",
-    name: "親子",
+    board: "funny",
+    name: "休閒娛樂",
   },
   {
     id: 4,
-    c_type: "games",
-    name: "遊戲",
+    board: "life",
+    name: "生活・日常",
   },
 ];
 
@@ -42,7 +37,7 @@ const FeedLayout: FC<Props> = (props) => {
 
   return (
     <div className="w-full relative flex justify-center py-[--header-height] bg-[--base]">
-      <div className="w-full lg:max-w-[960px] flex flex-col gap-5 mt-8">
+      <div className="w-full lg:max-w-[1248px] flex flex-col gap-5 mt-8">
         {/* <ul className="relative w-full h-[50px] flex items-center bg-brown text-white text-lg font-black px-8">
           {forumsCats.map((item) => (
             <Link
@@ -60,11 +55,11 @@ const FeedLayout: FC<Props> = (props) => {
           ))}
         </ul> */}
         <div className="flex justify-between">
-          <article className="w-full lg:max-w-[630px] bg-white rounded">
+          <article className="w-full lg:max-w-[889px] rounded">
             {children}
           </article>
-          <div className="w-[300px] hidden lg:flex flex-col gap-5">
-            <div className="w-full flex flex-col gap-4 bg-white rounded px-6 pt-12 pb-8">
+          <div className="w-[287px] hidden lg:flex flex-col gap-5">
+            <div className="w-full flex flex-col gap-4 rounded px-6 pt-12 pb-8">
               <ImageWithFallback
                 src="/assets/image/common/intro.png"
                 alt="intro_img"

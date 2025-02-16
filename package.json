@@ -17,16 +17,16 @@
     "dayjs": "^1.11.13",
     "firebase-admin": "^13.1.0",
     "froala-editor": "^4.2.1",
-    "mysql2": "^3.11.0",
-    "next": "13.4.13",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "next": "^13.1.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-froala-wysiwyg": "^4.2.1",
-    "react-query": "^3.39.3"
+    "react-query": "^3.39.3",
+    "react-redux": "^9.2.0"
   },
   "devDependencies": {
     "@types/node": "20.4.9",
-    "@types/react": "18.2.19",
+    "@types/react": "^19.0.9",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "^10.4.14",
     "eslint": "8.46.0",

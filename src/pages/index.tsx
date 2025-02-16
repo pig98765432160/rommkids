@@ -38,14 +38,6 @@ export default function Home() {
           />
         </div>
       </div>
-      <button
-        onClick={() => {
-          const test = axiosPost("test", {});
-          console.log(test);
-        }}
-      >
-        TEST
-      </button>
       <article className="max-w-[1200px] mx-auto flex flex-col gap-7 py-12 text-center">
         <h2 className="text-3xl font-black text-brown text-center">
           ROMM DAILY

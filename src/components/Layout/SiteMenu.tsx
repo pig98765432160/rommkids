@@ -48,7 +48,7 @@ const SiteMenu: FC = () => {
       </li>
       <li className="relative w-full text-center text-brown font-black">
         <Link
-          href="/creative"
+          href="/life"
           className="flex flex-col items-center justify-center gap-1 group"
         >
           <ShootingStarIcon
@@ -56,7 +56,7 @@ const SiteMenu: FC = () => {
             height={32}
             className="group-hover:rotate-12"
           />
-          <p className="relative z-10">創作分享</p>
+          <p className="relative z-10">生活・日常</p>
         </Link>
         <span className="absolute right-0 top-2/4 -translate-y-2/4 w-px h-[44%] bg-border"></span>
       </li>
