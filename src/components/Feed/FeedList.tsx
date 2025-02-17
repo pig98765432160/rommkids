@@ -31,22 +31,28 @@ const FeedList: FC<Props> = (props) => {
   );
 
   return (
-    <>
+    <div className="w-full my-5">
       {feed ? (
         <>
           {feed?.pages.map((page: any, pageIndex: number) =>
             page.map((item: any, index: number) => {
               if (page.length === index + 1) {
                 return (
-                  <Fragment key={index}>
+                  <ol
+                    key={index}
+                    className="grid grid-cols-3 gap-x-12 gap-y-12"
+                  >
                     <FeedItem ref={lastItemElementRef} feed={item} />
-                  </Fragment>
+                  </ol>
                 );
               } else {
                 return (
-                  <Fragment key={index}>
+                  <ol
+                    key={index}
+                    className="grid grid-cols-3 gap-x-12 gap-y-12.5"
+                  >
                     <FeedItem feed={item} />
-                  </Fragment>
+                  </ol>
                 );
               }
             })
@@ -55,11 +61,13 @@ const FeedList: FC<Props> = (props) => {
           {isError && <p className="text-hot text-center mt-5">請重新整理</p>}
         </>
       ) : (
-        Array.from({ length: 10 }).map((_, index) => (
-          <FeedItemLoading key={index} />
-        ))
+        <ol className="grid grid-cols-3 gap-x-12 gap-y-12">
+          {Array.from({ length: 9 }).map((_, index) => (
+            <FeedItemLoading key={index} />
+          ))}
+        </ol>
       )}
-    </>
+    </div>
   );
 };
 

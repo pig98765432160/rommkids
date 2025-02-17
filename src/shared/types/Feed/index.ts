@@ -1,5 +1,6 @@
 export interface FeedDetail {
   fid: number;
+  board: string;
   author: string;
   createAt: number;
   updateAt: number;

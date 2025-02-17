@@ -14,7 +14,7 @@ const SiteMenu: FC = () => {
     <ul className="w-full flex items-center justify-around overflow-auto text-sm px-48">
       <li className="relative w-full text-center text-brown font-black">
         <Link
-          href="/knowledge"
+          href="/forums/knowledge"
           className="flex flex-col items-center justify-center gap-1 group"
         >
           <SunIcon width={32} height={32} className="group-hover:rotate-12" />
@@ -24,7 +24,7 @@ const SiteMenu: FC = () => {
       </li>
       <li className="relative w-full text-center text-brown font-black">
         <Link
-          href="/learning"
+          href="/forums/learning"
           className="flex flex-col items-center justify-center gap-1 group"
         >
           <FlowerIcon
@@ -38,7 +38,7 @@ const SiteMenu: FC = () => {
       </li>
       <li className="relative w-full text-center text-brown font-black">
         <Link
-          href="/forums"
+          href="/forums/funny"
           className="flex flex-col items-center justify-center gap-1 group"
         >
           <CrownIcon width={32} height={32} className="group-hover:rotate-12" />
@@ -48,7 +48,7 @@ const SiteMenu: FC = () => {
       </li>
       <li className="relative w-full text-center text-brown font-black">
         <Link
-          href="/life"
+          href="/forums/life"
           className="flex flex-col items-center justify-center gap-1 group"
         >
           <ShootingStarIcon
