@@ -74,12 +74,19 @@ const FeedLayout: FC<Props> = (props) => {
               <span className="w-full text-center">
                 <h3 className="text-3xl text-brown font-black">關於我們</h3>
               </span>
-              <p>
+              {/* <p>
                 大家好！歡迎來到嗄歐麥麥！我們的創意分享小天地
                 <br />
                 創作 X 電玩 X 動漫 X 烹飪 X 科技
                 <br />
                 彙集有趣好玩又新奇的內容，待你來探索！
+              </p> */}
+              <p>
+                大家好！歡迎來到嗄歐麥麥！
+                <br />
+                這是專屬於你的討論空間
+                <br />
+                讓你能找到同好、獲得幫助，並一同成長！
               </p>
             </div>
             <div className="w-full flex flex-col bg-white rounded">

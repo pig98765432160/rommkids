@@ -22,7 +22,7 @@ const SiteMenu: FC = () => {
         </Link>
         <span className="absolute right-0 top-2/4 -translate-y-2/4 w-px h-[44%] bg-border"></span>
       </li>
-      <li className="relative w-full text-center text-brown font-black">
+      {/* <li className="relative w-full text-center text-brown font-black">
         <Link
           href="/forums/learning"
           className="flex flex-col items-center justify-center gap-1 group"
@@ -35,7 +35,7 @@ const SiteMenu: FC = () => {
           <p className="relative z-10">語言學習</p>
         </Link>
         <span className="absolute right-0 top-2/4 -translate-y-2/4 w-px h-[44%] bg-border"></span>
-      </li>
+      </li> */}
       <li className="relative w-full text-center text-brown font-black">
         <Link
           href="/forums/funny"
@@ -46,7 +46,7 @@ const SiteMenu: FC = () => {
         </Link>
         <span className="absolute right-0 top-2/4 -translate-y-2/4 w-px h-[44%] bg-border"></span>
       </li>
-      <li className="relative w-full text-center text-brown font-black">
+      {/* <li className="relative w-full text-center text-brown font-black">
         <Link
           href="/forums/life"
           className="flex flex-col items-center justify-center gap-1 group"
@@ -59,7 +59,7 @@ const SiteMenu: FC = () => {
           <p className="relative z-10">生活・日常</p>
         </Link>
         <span className="absolute right-0 top-2/4 -translate-y-2/4 w-px h-[44%] bg-border"></span>
-      </li>
+      </li> */}
       <li className="relative w-full text-center text-brown font-black">
         <Link
           href="/about"

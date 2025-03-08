@@ -1,0 +1,18 @@
+.homepage {
+  :global(.calendar-font) {
+    font-family: "Barlow", sans-serif;
+    line-height: 100%;
+  }
+
+  :global(.swiper-button-prev) {
+    color: white;
+    -webkit-text-stroke: 2px;
+    -webkit-text-stroke-color: white;
+  }
+
+  :global(.swiper-button-next) {
+    color: white;
+    -webkit-text-stroke: 2px;
+    -webkit-text-stroke-color: white;
+  }
+}
