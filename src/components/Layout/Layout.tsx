@@ -25,17 +25,17 @@ const Layout: FC<LayoutProps> = ({ children }) => {
       case "forums":
       case "article":
         return (
-          <>
+          <div className="data-content">
             <Header />
             <FeedLayout>{children}</FeedLayout>
             <Footer />
-          </>
+          </div>
         );
       default:
         return (
           <div className="data-content">
             <Header />
-            {children}
+            <FeedLayout>{children}</FeedLayout>
             <Footer />
           </div>
         );

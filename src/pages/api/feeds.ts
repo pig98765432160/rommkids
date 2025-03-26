@@ -38,23 +38,40 @@ async function getNextFid() {
 async function handleGet(req: NextApiRequest, res: NextApiResponse) {
   // const { fid } = req.query;
   const { board, tag, page = 1, limit = 10 }: any = req.query;
-  if (!board) {
-    return res.status(400).json({ message: "請提供 board 參數" });
-  }
-
   try {
-    let query = db.collection("articles").where("board", "==", board);
-    if (tag) {
-      query = query.where("tags", "array-contains", tag);
+    let queryRef: any = db.collection("articles");
+
+    if (board) {
+      queryRef = queryRef.where("board", "==", board);
     }
-    const snapshot = await query
+
+    if (tag) {
+      queryRef = queryRef.where("tags", "array-contains", tag);
+    }
+
+    // queryRef = queryRef.orderBy("createAt", "desc");
+
+    const snapshot = await queryRef
       .limit(limit)
       .offset((page - 1) * limit)
       .get();
-    const articles = snapshot.docs.map((doc) => ({
+
+    const articles = snapshot.docs.map((doc: any) => ({
       id: doc.id,
       ...doc.data(),
     }));
+    // let query = db.collection("articles").where("board", "==", board);
+    // if (tag) {
+    //   query = query.where("tags", "array-contains", tag);
+    // }
+    // const snapshot = await query
+    //   .limit(limit)
+    //   .offset((page - 1) * limit)
+    //   .get();
+    // const articles = snapshot.docs.map((doc) => ({
+    //   id: doc.id,
+    //   ...doc.data(),
+    // }));
     res.status(200).json({ status: "success", data: articles });
 
     // if (fid) {

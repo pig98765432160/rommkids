@@ -1,17 +1,16 @@
-import { ImageWithFallback, SwiperBanner } from "@/components/Common";
-import { fetchCharacter } from "@/helpers/apis/animeCharactersApi";
-import { axiosPost, errorAlert } from "@/helpers/baseAxios";
+import {
+  ImageWithFallback,
+  SwiperBanner,
+  YoutubeEmbed,
+} from "@/components/Common";
 import { EStatus } from "@/shared/types";
-import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import styles from "@/styles/homepage.module.scss";
-import CakeIcon from "@mui/icons-material/Cake";
-import { CircularProgress } from "@mui/material";
 import { fetchFeed } from "@/helpers/apis/feedApi";
 import { FeedItem } from "@/components/Feed";
-import { EnvelopeIcon, FBIcon, IGIcon, YTIcon } from "@/components/Icons/icons";
-import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
-import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
+import Daily from "../../public/assets/doc/daily.json";
+import Link from "next/link";
+import { useState } from "react";
 
 const hotAnime = [
   {
@@ -53,65 +52,13 @@ const hotGame = [
 ];
 
 const Home = () => {
-  const today = useMemo(() => new Date(), []);
-
-  const newTime = useMemo(() => {
-    const month = today.getMonth() + 1;
-    const day = today.getDate();
-
-    return `${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`;
-  }, [today]);
-
-  const todayYearMonth = useMemo(() => {
-    const year = today.getFullYear();
-    const monthArr = [
-      "JAN",
-      "FEB",
-      "MAR",
-      "APR",
-      "MAY",
-      "JUN",
-      "JUL",
-      "AUG",
-      "SEP",
-      "OCT",
-      "NOV",
-      "DEC",
-    ];
-    return `${year}.${monthArr[today.getMonth()]}`;
-  }, [today]);
-
-  const todayDay = useMemo(() => {
-    const month = today.getMonth() + 1;
-    const day = today.getDate();
-    const weekArr = ["日", "一", "二", "三", "四", "五", "六"];
-    const newWeek = weekArr[today.getDay()];
-    return `${month}/${day} (${newWeek})`;
-  }, [today]);
-
-  const { data: characterData, status: characterStatus } = useQuery(
-    ["character", newTime],
-    async () => {
-      const res = await fetchCharacter({ birthday: newTime });
-      if (res.status === EStatus.SUCCESS) {
-        return res.data;
-      } else {
-        errorAlert(res.data);
-        throw res.data;
-      }
-    },
-    {
-      keepPreviousData: true,
-      retry: false,
-      staleTime: 1000 * 60 * 60 * 24,
-      cacheTime: 1000 * 60 * 60 * 24,
-    }
-  );
+  const [selectedPollOption, setSelectedPollOption] = useState(null);
+  const handlePollSubmit = () => alert(`你選擇了: ${selectedPollOption}`);
 
   const { data: feedData, status: feedStatus } = useQuery(
     ["feed"],
     () =>
-      fetchFeed({ board: "knowledge" }).then((res) => {
+      fetchFeed({}).then((res) => {
         if (res.status === EStatus.SUCCESS) {
           return res.data;
         } else {
@@ -127,117 +74,232 @@ const Home = () => {
   );
 
   return (
-    <main
-      className={`${styles.homepage} w-[1280px] h-screen grid grid-cols-[auto_300px] gap-8 mx-auto pt-[--header-height] mt-12 mb-40`}
-    >
-      <div className="w-full flex flex-col gap-5">
-        <div className="w-auto flex flex-col">
-          <div className="relative w-full max-w-[946px]">
-            <SwiperBanner data={hotAnime} />
+    <div className="w-full flex flex-col gap-12">
+      <main className="w-full flex flex-col items-center gap-2 pb-10 px-4">
+        <section className="bg-white border-4 border-cute-beige rounded p-6">
+          <h2 className="text-xl font-bold text-dark-brown mb-4">最新公告</h2>
+          <ul className="text-brown text-sm space-y-3">
+            <li>🔹 2025/03/11 - 新增了首頁排版與推薦內容！</li>
+            <li>🔹 2025/03/11 - 我們的網站即將推出留言功能！</li>
+            <li>
+              🔹 2025/03/11 -{" "}
+              <span className="text-hot">新主題投票開放中！</span>
+              快來參加！
+            </li>
+          </ul>
+        </section>
+
+        <section className="bg-white border-4 border-cute-beige rounded p-6">
+          <span className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-bold text-dark-brown">最新影片</h2>
+            <Link
+              aria-label="ROMM嗄歐麥麥遊戲頻道"
+              target="_blank"
+              href="https://www.youtube.com/channel/UCecPCPSb854wmZwFYoS8ieg"
+              className="text-brown font-bold text-sm"
+            >
+              {`看更多 >>`}
+            </Link>
+          </span>
+          <div className="grid grid-cols-3 gap-4 justify-items-center">
+            <div className="w-full flex flex-col items-center border-2 border-cute-beige">
+              <YoutubeEmbed videoId="PQcFsyexL2c" />
+              <p className="text-sm text-center text-brown font-black py-1">
+                魔物獵人 荒野 part.4
+              </p>
+            </div>
+            <div className="w-full flex flex-col items-center border-2 border-cute-beige">
+              <YoutubeEmbed videoId="QYaBEboXSEc" />
+              <p className="text-sm text-center text-brown font-black py-1">
+                魔物獵人 荒野 part.3
+              </p>
+            </div>
+            <div className="w-full flex flex-col items-center border-2 border-cute-beige">
+              <YoutubeEmbed videoId="lQ6uJoHGs7k" />
+              <p className="text-sm text-center text-brown font-black py-1">
+                魔物獵人 荒野 part.2
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="lg:col-span-2 bg-white border-4 border-cute-beige rounded p-6">
+          <h2 className="text-xl font-bold text-dark-brown mb-4">
+            精選動漫 / 遊戲
+          </h2>
+          <div className="w-full overflow-hidden aspect-[1623/913]">
+            <ImageWithFallback
+              width={1623}
+              height={913}
+              src="/assets/image/recommend/recommend_01.jpg"
+              alt="魔物獵人 荒野"
+              className="w-full h-full object-cover"
+              priority={true}
+              fallbackSrc={"/feed/slider_img_nophoto.jpg"}
+            />
+          </div>
+          <h3 className="text-dark-brown text-xl font-bold my-3">
+            🔥站長推薦：《魔物獵人 荒野》
+          </h3>
+          <p className="text-brown text-sm">
+            本週特別推薦給大家的遊戲是《魔物獵人
+            荒野》，這款作品延續了系列一貫的狩獵動作體驗，並加入了更加廣闊的開放世界元素，讓玩家能夠自由探索未知的荒野，追蹤強大的魔物。無論是喜愛挑戰的老獵人，還是剛踏入狩獵世界的新手，都能在這片未知的大地上享受刺激的冒險與合作狩獵的樂趣！
+          </p>
+        </section>
+
+        <section className="bg-white border-4 border-cute-beige rounded p-6">
+          {feedData && (
+            <section>
+              <h2 className="text-xl font-bold mb-4 text-dark-brown">
+                編輯精選
+              </h2>
+              <div className="grid grid-cols-2 gap-7">
+                <Link
+                  href={`/article/${feedData[1].fid}`}
+                  className="flex gap-4 group"
+                >
+                  <div className="relative w-72 aspect-[640/360]">
+                    <ImageWithFallback
+                      src={feedData[1].cover}
+                      alt={feedData[1].title}
+                      width={640}
+                      height={360}
+                      className="w-full h-full object-cover rounded-md"
+                      priority={true}
+                      fallbackSrc={"/feed/slider_img_nophoto.jpg"}
+                    />
+                  </div>
+                  <h3 className="text-lg font-semibold group-hover:text-brown">
+                    {feedData[1].title}
+                  </h3>
+                </Link>
+                <Link
+                  href={`/article/${feedData[0].fid}`}
+                  className="flex gap-4 group"
+                >
+                  <div className="relative w-72 aspect-[640/360]">
+                    <ImageWithFallback
+                      src={feedData[0].cover}
+                      alt={feedData[0].title}
+                      width={640}
+                      height={360}
+                      className="w-full h-full object-cover rounded-md"
+                      priority={true}
+                      fallbackSrc={"/feed/slider_img_nophoto.jpg"}
+                    />
+                  </div>
+                  <h3 className="text-lg font-semibold group-hover:text-brown">
+                    {feedData[0].title}
+                  </h3>
+                </Link>
+              </div>
+            </section>
+          )}
+        </section>
+        {/* <section className="mt-8">
+          <h2 className="text-xl font-bold mb-4">網站簡介 & 目標</h2>
+          <p className="text-gray-700">
+            這裡是探索動漫、遊戲與技術的創意天地。我們致力於分享最新資訊、深入解析經典作品，並打造一個讓所有愛好者交流的空間！
+          </p>
+        </section> */}
+
+        <section className="bg-white border-4 border-cute-beige rounded p-6">
+          <h2 className="text-xl font-bold mb-4 text-dark-brown">
+            每週話題投票
+          </h2>
+          <form className="bg-gray-100 p-4 rounded-md shadow-md">
+            <p className="mb-2">這週你最期待的動漫是哪一部？</p>
+            <label className="block">
+              <input
+                type="radio"
+                name="poll"
+                value="動畫A"
+                onChange={(e) => setSelectedPollOption(e.target.value)}
+              />
+              Re：從零開始的異世界生活 第三季
+            </label>
+            <label className="block">
+              <input
+                type="radio"
+                name="poll"
+                value="動畫B"
+                onChange={(e) => setSelectedPollOption(e.target.value)}
+              />
+              Dr.STONE 新石紀 第四季
+            </label>
+            <label className="block">
+              <input
+                type="radio"
+                name="poll"
+                value="動畫B"
+                onChange={(e) => setSelectedPollOption(e.target.value)}
+              />
+              我獨自升級 第二季 －起於闇影－
+            </label>
+            <label className="block">
+              <input
+                type="radio"
+                name="poll"
+                value="動畫B"
+                onChange={(e) => setSelectedPollOption(e.target.value)}
+              />
+              青之驅魔師 終夜篇
+            </label>
+            <label className="block">
+              <input
+                type="radio"
+                name="poll"
+                value="動畫B"
+                onChange={(e) => setSelectedPollOption(e.target.value)}
+              />
+              魔法使的約定
+            </label>
+            <button
+              type="button"
+              className="mt-3 px-4 py-2 bg-dark-brown text-white rounded-md"
+              onClick={handlePollSubmit}
+            >
+              送出投票
+            </button>
+          </form>
+        </section>
+      </main>
+      <div className="w-full flex items-center justify-center">
+        <div className="relative w-[600px] aspect-[1073/576]">
+          <ImageWithFallback
+            src="/assets/image/common/daily_bg.png"
+            alt="daily_bg"
+            width={1073}
+            height={576}
+            className="w-full h-full"
+            fallbackSrc="/assets/image/common/slider_img_nophoto.jpg"
+          />
+          <div className="absolute top-1/2 -translate-y-1/2 flex flex-col items-center gap-5 px-28 py-4 pb-8">
+            <p className={`${styles.dailyFont} text-2xl`}>
+              {Daily["Daily"][0].desc}
+            </p>
+            <p className={`${styles.dailySeriesFont}`}>
+              ---- {Daily["Daily"][0].series} ----
+            </p>
           </div>
         </div>
-        <div className="flex flex-col items-center gap-8 my-12">
-          <h3 className="text-center text-3xl font-black text-primary">
-            最新文章
-          </h3>
+      </div>
+      <hr className="border border-dashed border-brown" />
+      <div className="flex flex-col items-center gap-8 mb-12">
+        <h3 className="text-center text-3xl font-black text-brown">最新文章</h3>
+        <ol className="grid grid-cols-3 gap-x-12 gap-y-12.5">
           {feedData && feedData.length > 0 ? (
             feedData.map((item: any, index: number) => (
-              <ol key={index} className="grid grid-cols-3 gap-x-12 gap-y-12.5">
-                <FeedItem feed={item} />
-              </ol>
+              <FeedItem key={index} feed={item} />
             ))
           ) : feedStatus === EStatus.ERROR ? (
             <p className="text-sm text-hot">請重新整理</p>
           ) : (
             <></>
           )}
-        </div>
+        </ol>
       </div>
-      <div className="shrink-0 w-[300px] flex flex-col items-center gap-5">
-        <div className="w-full flex flex-col gap-7 border-2 border-dashed border-brown px-5 pt-5 pb-10">
-          <div className="flex items-center gap-3">
-            <div className="flex flex-col items-start calendar-font font-semibold">
-              <p className="text-xs">TODAY</p>
-              <p className="text-xs">{todayYearMonth}</p>
-              <p className="text-3xl">{todayDay}</p>
-            </div>
-          </div>
-          <hr className="w-full border border-dashed border-brown" />
-          <div className="w-full">
-            <div className="flex items-center justify-between gap-4 border-b border-gray-300 py-2">
-              <div className="w-full flex items-center gap-2">
-                <CakeIcon sx={{ color: "#FF4081" }} />
-                <h3 className="text-2xl font-black">今日壽星</h3>
-              </div>
-              {/* <button>
-                <p className="text-xs text-gray-600">查看更多</p>
-              </button> */}
-            </div>
-            {characterStatus === EStatus.LOADING ? (
-              <div className="w-full h-full flex items-center justify-center">
-                <CircularProgress />
-              </div>
-            ) : (
-              <ul>
-                {characterData?.map((item: any) => (
-                  <li
-                    key={item.id}
-                    className="w-full flex items-end justify-between border-b border-gray-300 py-2"
-                  >
-                    <h3 className="text-2xl font-bold">{item.name}</h3>
-                    <p className="text-sm text-gray-700">{item.series}</p>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </div>
-        <div className="w-full flex flex-col gap-4 border-2 border-dashed border-brown p-5">
-          <ImageWithFallback
-            src="/assets/image/common/intro.png"
-            alt="intro_img"
-            width={358}
-            height={245}
-            className="w-full h-[172px]"
-            isBlur={true}
-            fallbackSrc="/assets/image/common/slider_img_nophoto.jpg"
-            priority={false}
-            loading="lazy"
-          />
-          <div className="w-full flex items-center gap-2">
-            <AssignmentIndIcon sx={{ color: "#FF4081" }} />
-            <h3 className="text-2xl font-black">關於我們</h3>
-          </div>
-          <p>
-            歡迎來到嗄歐麥麥！
-            <br />
-            分享動漫、遊戲相關內容，
-            <br />
-            彙集了很多有趣好玩又新奇的話題，待你來探索！
-          </p>
-        </div>
-        <div className="w-full flex flex-col gap-4 border-2 border-dashed border-brown p-5">
-          <div className="w-full flex items-center gap-2">
-            <InsertEmoticonIcon sx={{ color: "#FF4081" }} />
-            <h3 className="text-2xl font-black">FOLLOW US</h3>
-          </div>
-          <div className="w-full flex gap-4">
-            <button className="hover:icon-primary">
-              <FBIcon width={30} height={30} className="" />
-            </button>
-            <button className="hover:icon-hot">
-              <IGIcon width={30} height={30} className="" />
-            </button>
-            <button className="hover:icon-hot">
-              <YTIcon width={30} height={30} className="" />
-            </button>
-            <button className="hover:icon-primary">
-              <EnvelopeIcon width={30} height={30} className="" />
-            </button>
-          </div>
-        </div>
-      </div>
-    </main>
+    </div>
   );
 };
 

@@ -7,76 +7,49 @@ import { fetchFeed, getFeedDetail } from "@/helpers/apis/feedApi";
 import { useInfiniteQuery } from "react-query";
 import { EStatus } from "@/shared/types";
 import { useState } from "react";
-import {
-  CrownIcon,
-  FlowerIcon,
-  ShootingStarIcon,
-  SunIcon,
-} from "@/components/Icons/headerIcons";
+import { FeedItemLoading } from "@/components/Loading";
 
 const KnowledgePage: NextPage = () => {
   const router = useRouter();
   const [isFetchError, setIsFetchError] = useState(false);
 
-  const { data, isFetching, isError, hasNextPage, fetchNextPage } =
-    useInfiniteQuery(
-      ["fetchFeed", router.query?.board],
-      ({ pageParam = 1 }) =>
-        fetchFeed({
-          board: router.query?.board as string,
-          page: pageParam,
-        }).then((res) => {
-          if (res.status === EStatus.SUCCESS) {
-            setIsFetchError(false);
-            return res.data;
-          } else {
-            setIsFetchError(true);
-            throw new Error(res.data);
-          }
-        }),
-      {
-        getNextPageParam: (lastPage, allPages) => {
-          return lastPage.length >= 20 ? allPages.length + 1 : undefined;
-        },
-        keepPreviousData: true,
-        staleTime: 5 * 1000,
-      }
-    );
-
-  const Title = () => {
-    switch (router.query?.board) {
-      case "knowledge":
-        return (
-          <h1 className="flex items-center gap-1 text-2xl font-black">
-            <SunIcon width={32} height={32} className="" />
-            知識・科普
-          </h1>
-        );
-      case "learning":
-        return (
-          <h1 className="flex items-center gap-1 text-2xl font-black">
-            <FlowerIcon width={32} height={32} className="" />
-            語言學習
-          </h1>
-        );
-      case "funny":
-        return (
-          <h1 className="flex items-center gap-1 text-2xl font-black">
-            <CrownIcon width={32} height={32} className="" />
-            休閒娛樂
-          </h1>
-        );
-      case "life":
-        return (
-          <h1 className="flex items-center gap-1 text-2xl font-black">
-            <ShootingStarIcon width={32} height={32} className="" />
-            生活・日常
-          </h1>
-        );
-      default:
-        return <></>;
+  const {
+    data: feed,
+    status: fetchFeedStatus,
+    isFetching,
+    isError,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery(
+    ["fetchFeed", router.query?.board],
+    ({ pageParam = 1 }) =>
+      fetchFeed({
+        board: router.query?.board as string,
+        page: pageParam,
+      }).then((res) => {
+        if (res.status === EStatus.SUCCESS) {
+          setIsFetchError(false);
+          return res.data;
+        } else {
+          setIsFetchError(true);
+          throw new Error(res.data);
+        }
+      }),
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        return lastPage.length >= 20 ? allPages.length + 1 : undefined;
+      },
+      keepPreviousData: true,
+      staleTime: 5 * 1000,
+      retry: false,
+      onError: () => {
+        setIsFetchError(true);
+      },
+      onSuccess: () => {
+        setIsFetchError(false);
+      },
     }
-  };
+  );
 
   return (
     <>
@@ -87,22 +60,32 @@ const KnowledgePage: NextPage = () => {
         ogType="article"
         ogUrl={`${BASE_URL}${router.asPath}`}
       />
-      <div className="flex items-center gap-2 border-b border-dashed border-gray-900 py-4">
-        <Title />
+      <div className="w-full my-5">
+        {isFetchError ? (
+          <p className="text-hot text-center mt-5 w-full">請重新整理</p>
+        ) : fetchFeedStatus === EStatus.SUCCESS ? (
+          <div className="grid grid-cols-3 gap-x-12 gap-y-12">
+            <FeedList
+              feed={feed}
+              isFetching={isFetching}
+              isError={isError}
+              hasNextPage={hasNextPage}
+              fetchNextPage={fetchNextPage}
+            />
+          </div>
+        ) : (
+          <div className="grid grid-cols-3 gap-x-12 gap-y-12">
+            {Array.from({ length: 9 }).map((_, index) => (
+              <FeedItemLoading key={index} />
+            ))}
+          </div>
+        )}
+        {fetchFeedStatus === EStatus.SUCCESS && feed.pages[0].length === 0 && (
+          <p className="text-gray-900 text-center mt-5 w-full">
+            目前沒有文章哦~
+          </p>
+        )}
       </div>
-      {isFetchError ? (
-        <p className="text-hot text-center mt-5 w-full lg:w-[728px]">
-          請重新整理
-        </p>
-      ) : (
-        <FeedList
-          feed={data}
-          isFetching={isFetching}
-          isError={isError}
-          hasNextPage={hasNextPage}
-          fetchNextPage={fetchNextPage}
-        />
-      )}
     </>
   );
 };

@@ -1,78 +1,77 @@
-import Image from "next/image";
 import { FC } from "react";
 import Link from "next/link";
 import {
-  CrownIcon,
-  FlowerIcon,
-  FootPrintIcon,
-  ShootingStarIcon,
-  SunIcon,
+  AboutIcon,
+  AnimeIcon,
+  FunnyIcon,
+  GameIcon,
+  HeaderInfoIcon,
+  LifeIcon,
 } from "@/components/Icons/headerIcons";
+import { EBoardType, EBoardTypeLabel } from "@/shared/types/Board";
 
 const SiteMenu: FC = () => {
+  const getIcon = (type: EBoardType) => {
+    switch (type) {
+      case EBoardType.KNOWLEDGE:
+        return (
+          <HeaderInfoIcon
+            width={24}
+            height={24}
+            className="group-hover:rotate-12"
+          />
+        );
+      case EBoardType.FUNNY:
+        return (
+          <FunnyIcon width={24} height={24} className="group-hover:rotate-12" />
+        );
+      case EBoardType.LIFE:
+        return (
+          <LifeIcon width={24} height={24} className="group-hover:rotate-12" />
+        );
+      case EBoardType.GAME:
+        return (
+          <GameIcon width={24} height={24} className="group-hover:rotate-12" />
+        );
+
+      case EBoardType.ANIME:
+        return (
+          <AnimeIcon width={24} height={24} className="group-hover:rotate-12" />
+        );
+      case EBoardType.ABOUT:
+        return (
+          <AboutIcon width={24} height={24} className="group-hover:rotate-12" />
+        );
+      default:
+        return null;
+    }
+  };
+
+  const type = Object.entries(EBoardTypeLabel).map(([key, value], index) => ({
+    id: index + 1,
+    label: value,
+    type: key as EBoardType,
+  }));
+
   return (
-    <ul className="w-full flex items-center justify-around overflow-auto text-sm px-48">
-      <li className="relative w-full text-center text-brown font-black">
-        <Link
-          href="/forums/knowledge"
-          className="flex flex-col items-center justify-center gap-1 group"
-        >
-          <SunIcon width={32} height={32} className="group-hover:rotate-12" />
-          <p>知識・科普</p>
-        </Link>
-        <span className="absolute right-0 top-2/4 -translate-y-2/4 w-px h-[44%] bg-border"></span>
-      </li>
-      {/* <li className="relative w-full text-center text-brown font-black">
-        <Link
-          href="/forums/learning"
-          className="flex flex-col items-center justify-center gap-1 group"
-        >
-          <FlowerIcon
-            width={32}
-            height={32}
-            className="group-hover:rotate-12"
-          />
-          <p className="relative z-10">語言學習</p>
-        </Link>
-        <span className="absolute right-0 top-2/4 -translate-y-2/4 w-px h-[44%] bg-border"></span>
-      </li> */}
-      <li className="relative w-full text-center text-brown font-black">
-        <Link
-          href="/forums/funny"
-          className="flex flex-col items-center justify-center gap-1 group"
-        >
-          <CrownIcon width={32} height={32} className="group-hover:rotate-12" />
-          <p className="relative z-10">休閒娛樂</p>
-        </Link>
-        <span className="absolute right-0 top-2/4 -translate-y-2/4 w-px h-[44%] bg-border"></span>
-      </li>
-      {/* <li className="relative w-full text-center text-brown font-black">
-        <Link
-          href="/forums/life"
-          className="flex flex-col items-center justify-center gap-1 group"
-        >
-          <ShootingStarIcon
-            width={32}
-            height={32}
-            className="group-hover:rotate-12"
-          />
-          <p className="relative z-10">生活・日常</p>
-        </Link>
-        <span className="absolute right-0 top-2/4 -translate-y-2/4 w-px h-[44%] bg-border"></span>
-      </li> */}
-      <li className="relative w-full text-center text-brown font-black">
-        <Link
-          href="/about"
-          className="flex flex-col items-center justify-center gap-1 group"
-        >
-          <FootPrintIcon
-            width={32}
-            height={32}
-            className="group-hover:rotate-12"
-          />
-          <p className="relative z-10">關於我們</p>
-        </Link>
-      </li>
+    <ul className="w-full h-full flex items-center justify-around overflow-auto text-sm px-20">
+      {type.map((item, index) => (
+        <li key={index} className="relative w-full border-r border-gray-400">
+          <Link
+            href={
+              item.type === EBoardType.ABOUT
+                ? item.type
+                : `/forums/${item.type}`
+            }
+            className="flex items-center justify-center gap-1 group"
+          >
+            {getIcon(item.type)}
+            <p className="relative z-10 text-dark-brown font-semibold">
+              {item.label}
+            </p>
+          </Link>
+        </li>
+      ))}
     </ul>
   );
 };

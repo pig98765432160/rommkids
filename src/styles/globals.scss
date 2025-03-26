@@ -10,6 +10,12 @@
     @apply bg-white border-2 border-black rounded-full
   }
 
+  .icon-white path {
+    fill: theme("colors.white")
+  }
+  .icon-header-icon path {
+    fill: theme("colors.header-icon")
+  }
   .icon-primary path {
     fill: theme("colors.primary")
   }
@@ -46,7 +52,7 @@ body {
 }
 
 a {
-  color: inherit;
+  color: #5e5e5e;
   text-decoration: none;
 }
 
@@ -67,12 +73,12 @@ p {
 }
 
 :root {
-  --base: #FDF4E3;
+  --base: #fff7e7;
   --header-height: 80px;
 }
 
 body {
-  background-color: #FDF4E3
+  background-color: #fff7e7
 }
 
 // 滑鼠hover圖片放大

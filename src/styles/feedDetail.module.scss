@@ -1,0 +1,30 @@
+.feedDetail {
+    :global(.detail-tag) {
+      background-color: #FFDC4B;
+      font-size: 0.875rem;
+      color: #2B2B2B;
+      padding: 0.125rem 0.5rem;
+      margin-right: 0.75rem;
+      border-radius: 4px;
+      cursor: pointer;
+      &:hover {
+        background-color: #f3cb2a;
+      }
+    }
+    p {
+      margin: 0;
+    }
+    h2 {
+      border-left: 5px solid #FFDC4B;
+      padding-left: 1rem;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+    img {
+      width: 100%; 
+      height: auto;
+      aspect-ratio: 640 / 360;
+      object-fit: cover; 
+    }
+  }
+  

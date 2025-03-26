@@ -6,6 +6,7 @@ import { getAllFeedIds, getFeedDetail } from "@/helpers/apis/feedApi";
 import dayjs from "dayjs";
 import { FeedDetail } from "@/shared/types/Feed";
 import { ImageWithFallback } from "@/components/Common";
+import styles from "@/styles/feedDetail.module.scss";
 
 interface Props {
   feedDetail: FeedDetail;
@@ -13,6 +14,8 @@ interface Props {
 
 const ArticlePage: NextPage<Props> = (props) => {
   const { feedDetail } = props;
+
+  console.log(feedDetail);
 
   const svg_ro = renderToStaticMarkup(
     <span style={{ display: "inline-flex", verticalAlign: "middle" }}>
@@ -30,11 +33,20 @@ const ArticlePage: NextPage<Props> = (props) => {
   replaced = replaced.replace(/B:/g, svg_ro);
 
   return (
-    <>
-      <div className="flex justify-start gap-2 border-b border-dashed border-gray-900 py-5 mb-5">
-        <h1 className="text-2xl font-black text-gray-900">
+    <div
+      className={`${styles.feedDetail} w-full flex flex-col bg-white rounded px-20 py-8`}
+    >
+      <div className="flex flex-col justify-start gap-2 border-b border-dashed border-gray-900 pb-5">
+        <h1 className="text-3xl font-black text-gray-900">
           {feedDetail.title}
         </h1>
+        <div className="w-full py-1">
+          {feedDetail.tags.map((tag, index) => (
+            <span key={index} className="detail-tag">
+              {`#${tag}`}
+            </span>
+          ))}
+        </div>
       </div>
       <div className="flex items-center gap-2 my-5">
         <div className="shrink-0 border border-gray-400 rounded-full p-1 bg-white">
@@ -47,13 +59,13 @@ const ArticlePage: NextPage<Props> = (props) => {
           </p>
         </span>
       </div>
-      <div className="w-full h-auto my-8 px-8">
+      <div className="w-full aspect-[2560/1536]">
         <ImageWithFallback
           src={`/assets/image/article/cover_${feedDetail.fid}.png`}
           alt="article_cover"
           width={2560}
           height={1536}
-          className=""
+          className="w-full h-full"
           isBlur={true}
           fallbackSrc="/assets/image/common/slider_img_nophoto.jpg"
           priority={false}
@@ -61,7 +73,7 @@ const ArticlePage: NextPage<Props> = (props) => {
         />
       </div>
       <div className="article" dangerouslySetInnerHTML={{ __html: replaced }} />
-    </>
+    </div>
   );
 };
 
