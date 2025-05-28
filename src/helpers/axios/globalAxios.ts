@@ -1,4 +1,4 @@
-import { API_URL, BASE_URL } from "@/shared/constants";
+import { BASE_URL } from "@/shared/constants";
 import { EStatus } from "@/shared/types/Status";
 import axios from "axios";
 
@@ -38,7 +38,6 @@ export const axiosPost = (url: string, payload: any) => {
   return axiosBase
     .post(url, payload)
     .then((res) => {
-      debugger;
       return res?.data;
     })
     .catch((error) => {

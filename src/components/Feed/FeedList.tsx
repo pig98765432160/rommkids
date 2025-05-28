@@ -27,37 +27,27 @@ const FeedList: FC<Props> = (props) => {
       });
       if (node) observer.current.observe(node);
     },
-    [isFetching, hasNextPage]
+    [isFetching, hasNextPage, fetchNextPage]
   );
 
   return (
     <>
-      {feed ? (
-        <>
-          {feed?.pages.map((page: any, pageIndex: number) =>
-            page.map((item: any, index: number) => {
-              if (page.length === index + 1) {
-                return (
-                  <Fragment key={index}>
-                    <FeedItem ref={lastItemElementRef} feed={item} />
-                  </Fragment>
-                );
-              } else {
-                return (
-                  <Fragment key={index}>
-                    <FeedItem feed={item} />
-                  </Fragment>
-                );
-              }
-            })
-          )}
-          {isFetching && !isError && <FeedItemLoading />}
-          {isError && <p className="text-hot text-center mt-5">請重新整理</p>}
-        </>
-      ) : (
-        Array.from({ length: 10 }).map((_, index) => (
-          <FeedItemLoading key={index} />
-        ))
+      {feed.pages.map((page: any, pageIndex: number) =>
+        page.map((item: any, index: number) => {
+          if (page.length === index + 1) {
+            return (
+              <ol key={index}>
+                <FeedItem ref={lastItemElementRef} feed={item} />
+              </ol>
+            );
+          } else {
+            return (
+              <ol key={index}>
+                <FeedItem feed={item} />
+              </ol>
+            );
+          }
+        })
       )}
     </>
   );

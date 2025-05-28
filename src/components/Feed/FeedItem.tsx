@@ -1,47 +1,68 @@
-import { FC, forwardRef } from "react";
-import Image from "next/image";
+import { FC, forwardRef, Ref, useEffect, useState } from "react";
 import Link from "next/link";
+import { ImageWithFallback } from "@/components/Common";
+import { FeedDetail } from "@/shared/types/Feed";
+import { EBoardType, EBoardTypeLabel } from "@/shared/types/Board";
 
 interface Props {
-  ref?: any;
-  feed: any;
+  ref?: Ref<HTMLDivElement>;
+  feed: FeedDetail;
 }
 
 const FeedItem: FC<Props> = forwardRef((props: Props, ref) => {
   const { feed } = props;
+
+  const type = Object.entries(EBoardTypeLabel).map(([key, value], index) => ({
+    id: index + 1,
+    label: value,
+    type: key as EBoardType,
+  }));
+
   return (
-    <Link
-      href={`/article/${feed.fid}`}
-      className="relative w-full flex items-center gap-4 p-4 image-box border-b border-gray-300"
-    >
-      {feed.cover && (
-        <div className="flex-shrink-0 w-[300px] h-[180px] overflow-hidden">
-          <Image
-            loader={({ src }) => src}
-            width={172}
-            height={99}
-            src={feed.cover}
+    <li className="flex flex-col gap-2 w-full">
+      <Link
+        href={`/article/${feed.fid}`}
+        className="flex flex-col items-center gap-2 image-box group"
+      >
+        <div className="rounded-lg overflow-hidden border border-gray-500 aspect-[307/202]">
+          <ImageWithFallback
+            src={feed.cover as string}
             alt="thumbnail"
-            className="bg-black w-[300px] h-[180px] object-cover hoverimg"
-            priority={true}
-            placeholder="blur"
-            blurDataURL={"/assets/image/common/slider_img_nophoto.jpg"}
-            unoptimized={true}
+            width={307}
+            height={202}
+            className="w-full h-full object-cover hoverimg"
+            isBlur={true}
+            fallbackSrc="/assets/image/common/slider_img_nophoto.jpg"
           />
         </div>
-      )}
-      <div className="h-full flex flex-col justify-between">
-        <div className="flex flex-col gap-3">
-          <h2 className="text-2xl font-black text-brown break-all line-clamp-2">
+        <div className="flex flex-col gap-2">
+          <div className="w-fit flex items-center gap-1 text-sm bg-white px-1 py-0.5 rounded">
+            {/* <SunIcon width={16} height={16} className="" /> */}
+            {/* <span>{BoardLabel[feed.board as BoardType]}</span> */}
+            {/* <span>{EBoardTypeLabel[type[feed.board]]}</span> */}
+          </div>
+          <h2 className="text-lg text-justify font-black break-all line-clamp-2 group-hover:underline">
             {feed.title}
           </h2>
-          <p className="text-gray-900 text-sm mb-5 break-all line-clamp-2">
-            {feed.desc}
-          </p>
         </div>
-        <p className="text-xs text-gray-500">作者：{feed.author}</p>
+      </Link>
+      <div className="w-full py-1 border-y border-dashed border-gray-500">
+        {feed.tags.map((tag, index) => (
+          <span
+            key={index}
+            className="text-xs text-white bg-brown mr-3 px-1 rounded"
+          >
+            {`#${tag}`}
+          </span>
+        ))}
       </div>
-    </Link>
+      <div className="flex items-center justify-between">
+        <p className="text-xs">作者：{feed.author}</p>
+        <p className="text-xs">
+          {new Date(feed.createAt * 1000).toLocaleDateString()}
+        </p>
+      </div>
+    </li>
   );
 });
 

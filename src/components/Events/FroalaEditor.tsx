@@ -61,6 +61,10 @@ const FroalaEditorComponent = dynamic(
       // @ts-ignore
       import("froala-editor/js/plugins/paragraph_style.min.js"),
       // @ts-ignore
+      import("froala-editor/js/plugins/paragraph_format.min.js"),
+      // @ts-ignore
+      import("froala-editor/js/plugins/lists.min.js"),
+      // @ts-ignore
       import("froala-editor/js/plugins/colors.min.js"),
       // @ts-ignore
       import("froala-editor/js/plugins/table.min.js"),
@@ -106,7 +110,18 @@ const FroalaEditor: FC<Props> = (props) => {
           width: "100%",
           language: "zh_tw",
           toolbarButtons: [
-            ["bold", "italic", "underline", "fontSize", "textColor"],
+            [
+              "bold",
+              "italic",
+              "underline",
+              "fontSize",
+              "textColor",
+              "|",
+              "paragraphFormat",
+              "align",
+              "formatOL",
+              "formatUL",
+            ],
             ["insertLink", "undo", "redo", "embedly", "html"],
           ],
           // imageUpload: true,
@@ -123,6 +138,7 @@ const FroalaEditor: FC<Props> = (props) => {
           // imageInsertButtons: ["imageBack", "|", "imageUpload", "imageByURL"],
           // videoUpload: false,
           charCounterCount: false,
+          wordCounterCount: false,
           attribution: false,
           linkAlwaysBlank: true,
           linkAlwaysNoFollow: true,
@@ -134,23 +150,6 @@ const FroalaEditor: FC<Props> = (props) => {
             "background-color",
           ],
           pasteAllowedStyleProps: ["font-size", "color"],
-          fontSize: [
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "14",
-            "16",
-            "18",
-            "24",
-            "30",
-            "48",
-            "60",
-            "72",
-            "96",
-          ],
-          PluginsEnabled: ["codeView", "codeBeautifier"],
           codeBeautifierOptions: {
             end_with_newline: true,
             indent_inner_html: true,
@@ -162,23 +161,6 @@ const FroalaEditor: FC<Props> = (props) => {
             wrap_line_length: 0,
           },
           events: {
-            "image.beforeUpload": function (images: any) {
-              // @ts-ignore
-              this.image.showProgressBar();
-
-              setEditorLoading(true);
-            },
-            "image.uploaded": function (response: any) {
-              // @ts-ignore
-              this.image.hideProgressBar();
-
-              setEditorLoading(false);
-            },
-
-            "image.error": function (error: any) {
-              setEditorLoading(false);
-            },
-
             initialized: function () {
               setIsEdit(false);
             },

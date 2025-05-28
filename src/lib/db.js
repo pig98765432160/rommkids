@@ -1,10 +1,14 @@
-import mysql from "mysql2/promise";
+import admin from "firebase-admin";
 
-const connection = await mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "12345678",
-  database: "romm_database",
-});
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      project_id: process.env.FIREBASE_PROJECT_ID,
+      client_email: process.env.FIREBASE_CLIENT_EMAIL,
+      private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"), // 處理換行
+    }),
+  });
+}
 
-export default connection;
+const db = admin.firestore();
+export { db };

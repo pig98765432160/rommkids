@@ -4,6 +4,9 @@ import type { AppProps } from "next/app";
 import Layout from "@/components/Layout";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { Provider } from "react-redux";
+import AlertDialog from "@/components/Template/AlertDialog";
+import store from "@/store";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,16 +24,19 @@ export default function App({
   return (
     <QueryClientProvider client={queryClient} contextSharing={true}>
       <ErrorBoundary>
-        <Layout>
-          <Head>
-            <title>嗄歐麥麥</title>
-            <meta
-              name="viewport"
-              content="width=device-width,initial-scale=1.0,shrink-to-fit=no"
-            />
-          </Head>
-          <Component {...pageProps} />
-        </Layout>
+        <Provider store={store}>
+          <Layout>
+            <AlertDialog />
+            <Head>
+              <title>嗄歐麥麥</title>
+              <meta
+                name="viewport"
+                content="width=device-width,initial-scale=1.0,shrink-to-fit=no"
+              />
+            </Head>
+            <Component {...pageProps} />
+          </Layout>
+        </Provider>
       </ErrorBoundary>
     </QueryClientProvider>
   );

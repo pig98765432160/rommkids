@@ -1,58 +1,48 @@
-import { useRouter } from "next/router";
 import Image from "next/image";
-import { FC, useContext, useEffect, useState } from "react";
+import { FC } from "react";
 import Link from "next/link";
-import { MenuItemBg } from "../Icons/menuItemIcon";
+import styles from "@/styles/head.module.scss";
+import SiteMenu from "./SiteMenu";
+import { EnvelopeIcon, FBIcon, IGIcon, YTIcon } from "../Icons/icons";
 
 const Header: FC = () => {
-  const router = useRouter();
-
   return (
-    <header className="head absolute top-0 left-0 w-full h-[100px] flex justify-between z-50 bg-white">
-      <h1 className="absolute top-0 left-0 w-72 h-[160px] z-10 bg-white rounded-br-[50px]">
-        <Link
-          href="/"
-          className="w-full h-full flex items-center justify-center p-3"
-        >
-          <Image
-            src="/assets/image/common/logo.png"
-            alt="Romm 嗄歐麥麥"
-            width={500}
-            height={355}
-          />
+    <header className={styles.head}>
+      <div className={styles.headerContainer}>
+        <Link href="/">
+          <div className="relative w-[calc(163/390*100vw)] lg:w-[160px] aspect-[512/98]">
+            <Image
+              src="/assets/image/common/logo_2.png"
+              alt="Romm 嗄歐麥麥"
+              width={512}
+              height={98}
+              className="w-full h-full"
+              priority={true}
+            />
+          </div>
         </Link>
-      </h1>
-      <div className="relative w-full flex items-center justify-center gap-28 mx-auto">
-        <Link href="/forums" className="relative text-brown font-black">
-          <p className="relative z-10">討論區 FORUMS</p>
-          <MenuItemBg
-            width={160}
-            height={40}
-            className="absolute -top-2 -left-4 icon-cute-yellow"
-          />
-        </Link>
-        <Link
-          href="/lifestyle"
-          className="relative menu02 text-brown font-black"
-        >
-          <p className="relative z-10">日誌 LIFESTYLE</p>
-          <MenuItemBg
-            width={160}
-            height={40}
-            className="absolute -top-2 -left-4 icon-cute-blue"
-          />
-        </Link>
-        <Link
-          href="/creative"
-          className="relative menu03 text-brown font-black"
-        >
-          <p className="relative z-10">發想 CREATIVE</p>
-          <MenuItemBg
-            width={160}
-            height={40}
-            className="absolute -top-2 -left-4 icon-cute-green"
-          />
-        </Link>
+
+        {/* <SiteMenu /> */}
+
+        <div className="w-[250px] flex items-end justify-center">
+          {/* <Link href="/login" className="text-brown font-black">
+            <p>登入</p>
+          </Link> */}
+        </div>
+        <div className="absolute top-0 right-0 flex gap-5 mt-2">
+          <button className="icon-header-icon hover:icon-primary">
+            <FBIcon width={20} height={20} className="" />
+          </button>
+          <button className="icon-header-icon hover:icon-hot">
+            <IGIcon width={20} height={20} className="" />
+          </button>
+          <button className="icon-header-icon hover:icon-hot">
+            <YTIcon width={20} height={20} className="" />
+          </button>
+          <button className="icon-header-icon hover:icon-primary">
+            <EnvelopeIcon width={20} height={20} className="" />
+          </button>
+        </div>
       </div>
     </header>
   );
