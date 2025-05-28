@@ -10,7 +10,7 @@ import { fetchFeed } from "@/helpers/apis/feedApi";
 import { FeedItem } from "@/components/Feed";
 import Daily from "../../public/assets/doc/daily.json";
 import Link from "next/link";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 const hotAnime = [
   {
@@ -52,8 +52,36 @@ const hotGame = [
 ];
 
 const Home = () => {
-  const [selectedPollOption, setSelectedPollOption] = useState(null);
+  const [selectedPollOption, setSelectedPollOption] = useState<any>(null);
   const handlePollSubmit = () => alert(`你選擇了: ${selectedPollOption}`);
+  const today = useMemo(() => new Date(), []);
+
+  const todayYearMonth = useMemo(() => {
+    const year = today.getFullYear();
+    const monthArr = [
+      "JAN",
+      "FEB",
+      "MAR",
+      "APR",
+      "MAY",
+      "JUN",
+      "JUL",
+      "AUG",
+      "SEP",
+      "OCT",
+      "NOV",
+      "DEC",
+    ];
+    return `${year}.${monthArr[today.getMonth()]}`;
+  }, [today]);
+
+  const todayDay = useMemo(() => {
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+    const weekArr = ["日", "一", "二", "三", "四", "五", "六"];
+    const newWeek = weekArr[today.getDay()];
+    return `${month}/${day} (${newWeek})`;
+  }, [today]);
 
   const { data: feedData, status: feedStatus } = useQuery(
     ["feed"],
@@ -75,9 +103,25 @@ const Home = () => {
 
   return (
     <div className="w-full flex flex-col gap-12">
-      <main className="w-full flex flex-col items-center gap-2 pb-10 px-4">
-        <section className="bg-white border-4 border-cute-beige rounded p-6">
-          <h2 className="text-xl font-bold text-dark-brown mb-4">最新公告</h2>
+      <main className="w-full flex flex-col items-center gap-3 pb-10 px-4">
+        <div className="relative w-full">
+          <ImageWithFallback
+            src="/assets/image/common/home_banner.jpg"
+            alt="首頁橫幅"
+            width={916}
+            height={325}
+            className="w-full h-[325px] object-cover rounded-lg"
+            priority={true}
+            fallbackSrc="/feed/slider_img_nophoto.jpg"
+          />
+          <div className="absolute right-5 top-5 flex flex-col items-end text-[#341A0D]">
+            <p className="text-sm font-semibold">TODAY</p>
+            <p className="text-sm font-medium">{todayYearMonth}</p>
+            <p className="text-4xl font-extrabold">{todayDay}</p>
+          </div>
+        </div>
+        {/* <section className="home-section">
+          <h2 className="home-title">最新公告</h2>
           <ul className="text-brown text-sm space-y-3">
             <li>🔹 2025/03/11 - 新增了首頁排版與推薦內容！</li>
             <li>🔹 2025/03/11 - 我們的網站即將推出留言功能！</li>
@@ -87,11 +131,26 @@ const Home = () => {
               快來參加！
             </li>
           </ul>
+        </section> */}
+
+        <section className="home-section">
+          <h2 className="home-title">最新文章</h2>
+          <ul className="grid grid-cols-3 gap-x-12 gap-y-12.5">
+            {feedData && feedData.length > 0 ? (
+              feedData.map((item: any, index: number) => (
+                <FeedItem key={index} feed={item} />
+              ))
+            ) : feedStatus === EStatus.ERROR ? (
+              <p className="text-sm text-hot">請重新整理</p>
+            ) : (
+              <></>
+            )}
+          </ul>
         </section>
 
-        <section className="bg-white border-4 border-cute-beige rounded p-6">
+        <section className="home-section">
           <span className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-dark-brown">最新影片</h2>
+            <h2 className="home-title">最新影片</h2>
             <Link
               aria-label="ROMM嗄歐麥麥遊戲頻道"
               target="_blank"
@@ -123,10 +182,8 @@ const Home = () => {
           </div>
         </section>
 
-        <section className="lg:col-span-2 bg-white border-4 border-cute-beige rounded p-6">
-          <h2 className="text-xl font-bold text-dark-brown mb-4">
-            精選動漫 / 遊戲
-          </h2>
+        <section className="lg:col-span-2 home-section">
+          <h2 className="home-title">精選動漫 / 遊戲</h2>
           <div className="w-full overflow-hidden aspect-[1623/913]">
             <ImageWithFallback
               width={1623}
@@ -147,12 +204,10 @@ const Home = () => {
           </p>
         </section>
 
-        <section className="bg-white border-4 border-cute-beige rounded p-6">
+        <section className="home-section">
           {feedData && (
             <section>
-              <h2 className="text-xl font-bold mb-4 text-dark-brown">
-                編輯精選
-              </h2>
+              <h2 className="home-title">編輯精選</h2>
               <div className="grid grid-cols-2 gap-7">
                 <Link
                   href={`/article/${feedData[1].fid}`}
@@ -196,17 +251,9 @@ const Home = () => {
             </section>
           )}
         </section>
-        {/* <section className="mt-8">
-          <h2 className="text-xl font-bold mb-4">網站簡介 & 目標</h2>
-          <p className="text-gray-700">
-            這裡是探索動漫、遊戲與技術的創意天地。我們致力於分享最新資訊、深入解析經典作品，並打造一個讓所有愛好者交流的空間！
-          </p>
-        </section> */}
 
-        <section className="bg-white border-4 border-cute-beige rounded p-6">
-          <h2 className="text-xl font-bold mb-4 text-dark-brown">
-            每週話題投票
-          </h2>
+        <section className="home-section">
+          <h2 className="home-title">每週話題投票</h2>
           <form className="bg-gray-100 p-4 rounded-md shadow-md">
             <p className="mb-2">這週你最期待的動漫是哪一部？</p>
             <label className="block">
@@ -283,21 +330,6 @@ const Home = () => {
             </p>
           </div>
         </div>
-      </div>
-      <hr className="border border-dashed border-brown" />
-      <div className="flex flex-col items-center gap-8 mb-12">
-        <h3 className="text-center text-3xl font-black text-brown">最新文章</h3>
-        <ol className="grid grid-cols-3 gap-x-12 gap-y-12.5">
-          {feedData && feedData.length > 0 ? (
-            feedData.map((item: any, index: number) => (
-              <FeedItem key={index} feed={item} />
-            ))
-          ) : feedStatus === EStatus.ERROR ? (
-            <p className="text-sm text-hot">請重新整理</p>
-          ) : (
-            <></>
-          )}
-        </ol>
       </div>
     </div>
   );

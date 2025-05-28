@@ -19,7 +19,7 @@ const FeedItem: FC<Props> = forwardRef((props: Props, ref) => {
   }));
 
   return (
-    <li className="flex flex-col gap-3 w-full">
+    <li className="flex flex-col gap-2 w-full">
       <Link
         href={`/article/${feed.fid}`}
         className="flex flex-col items-center gap-2 image-box group"
@@ -41,14 +41,17 @@ const FeedItem: FC<Props> = forwardRef((props: Props, ref) => {
             {/* <span>{BoardLabel[feed.board as BoardType]}</span> */}
             {/* <span>{EBoardTypeLabel[type[feed.board]]}</span> */}
           </div>
-          <h2 className="text-xl text-justify font-black break-all line-clamp-2 group-hover:underline">
+          <h2 className="text-lg text-justify font-black break-all line-clamp-2 group-hover:underline">
             {feed.title}
           </h2>
         </div>
       </Link>
       <div className="w-full py-1 border-y border-dashed border-gray-500">
         {feed.tags.map((tag, index) => (
-          <span key={index} className="text-xs text-gray-600 bg-gray-200 mr-3">
+          <span
+            key={index}
+            className="text-xs text-white bg-brown mr-3 px-1 rounded"
+          >
             {`#${tag}`}
           </span>
         ))}

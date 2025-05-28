@@ -61,6 +61,10 @@ const FroalaEditorComponent = dynamic(
       // @ts-ignore
       import("froala-editor/js/plugins/paragraph_style.min.js"),
       // @ts-ignore
+      import("froala-editor/js/plugins/paragraph_format.min.js"),
+      // @ts-ignore
+      import("froala-editor/js/plugins/lists.min.js"),
+      // @ts-ignore
       import("froala-editor/js/plugins/colors.min.js"),
       // @ts-ignore
       import("froala-editor/js/plugins/table.min.js"),
@@ -106,7 +110,18 @@ const FroalaEditor: FC<Props> = (props) => {
           width: "100%",
           language: "zh_tw",
           toolbarButtons: [
-            ["bold", "italic", "underline", "fontSize", "textColor"],
+            [
+              "bold",
+              "italic",
+              "underline",
+              "fontSize",
+              "textColor",
+              "|",
+              "paragraphFormat",
+              "align",
+              "formatOL",
+              "formatUL",
+            ],
             ["insertLink", "undo", "redo", "embedly", "html"],
           ],
           // imageUpload: true,

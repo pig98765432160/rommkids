@@ -22,7 +22,7 @@ const Header: FC = () => {
           </div>
         </Link>
 
-        <SiteMenu />
+        {/* <SiteMenu /> */}
 
         <div className="w-[250px] flex items-end justify-center">
           {/* <Link href="/login" className="text-brown font-black">

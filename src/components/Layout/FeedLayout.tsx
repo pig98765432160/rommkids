@@ -49,33 +49,6 @@ const FeedLayout: FC<Props> = (props) => {
     return `${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`;
   }, [today]);
 
-  const todayYearMonth = useMemo(() => {
-    const year = today.getFullYear();
-    const monthArr = [
-      "JAN",
-      "FEB",
-      "MAR",
-      "APR",
-      "MAY",
-      "JUN",
-      "JUL",
-      "AUG",
-      "SEP",
-      "OCT",
-      "NOV",
-      "DEC",
-    ];
-    return `${year}.${monthArr[today.getMonth()]}`;
-  }, [today]);
-
-  const todayDay = useMemo(() => {
-    const month = today.getMonth() + 1;
-    const day = today.getDate();
-    const weekArr = ["日", "一", "二", "三", "四", "五", "六"];
-    const newWeek = weekArr[today.getDay()];
-    return `${month}/${day} (${newWeek})`;
-  }, [today]);
-
   const { data: characterData, status: characterStatus } = useQuery(
     ["character", newTime],
     async () => {
@@ -139,47 +112,39 @@ const FeedLayout: FC<Props> = (props) => {
       </div> */}
       {children}
       <div className="shrink-0 w-[300px] flex flex-col items-center gap-3">
-        <div className="bg-cute-beige p-6 rounded-lg shadow-sm flex flex-col items-center w-full text-dark-brown">
-          <p className="text-xs font-semibold opacity-80">TODAY</p>
-          <p className="text-xs font-medium">{todayYearMonth}</p>
-          <p className="text-4xl font-extrabold">{todayDay}</p>
-        </div>
-        <div className="w-full p-1 border border-gray-300 bg-cute-beige rounded-lg shadow-sm">
-          <div className="relative bg-white p-4 rounded-md">
-            <div className="flex items-center justify-between gap-4 border-b-2 border-brown pb-3">
-              <div className="flex items-center gap-2">
-                <CakeIcon className="text-pink-500" />
-                <h3 className="text-xl font-black text-brown">今日壽星</h3>
-              </div>
+        <section className="w-full home-section">
+          <div className="flex items-center justify-between gap-4 border-b border-brown pb-3">
+            <div className="flex items-center gap-2">
+              <CakeIcon className="text-pink-500" />
+              <h3 className="text-xl font-black text-brown">今日壽星</h3>
             </div>
-            {characterStatus === EStatus.LOADING ? (
-              <div className="w-full flex items-center justify-center py-4">
-                <CircularProgress />
-              </div>
-            ) : (
-              <ul className="flex flex-col gap-2 my-4 text-brown">
-                {characterData?.map(
-                  (
-                    item: { id: number; name: string; series: string },
-                    index: number
-                  ) => (
-                    <li key={item.id} className="flex justify-between">
-                      <span className="font-bold">
-                        {index + 1}. {item.name}
-                      </span>
-                      <span className="text-xs text-gray-700">
-                        {item.series}
-                      </span>
-                    </li>
-                  )
-                )}
-              </ul>
-            )}
           </div>
-        </div>
-        <div className="w-full p-1 border border-gray-300 bg-cute-beige rounded-lg shadow-sm">
-          <div className="relative bg-white p-4 rounded-md pb-10">
-            <div className="w-full aspect-[358/245]">
+          {characterStatus === EStatus.LOADING ? (
+            <div className="w-full flex items-center justify-center py-4">
+              <CircularProgress />
+            </div>
+          ) : (
+            <ul className="flex flex-col gap-2 my-4 text-brown">
+              {characterData?.map(
+                (
+                  item: { id: number; name: string; series: string },
+                  index: number
+                ) => (
+                  <li key={item.id} className="flex justify-between">
+                    <span className="font-bold">
+                      {index + 1}. {item.name}
+                    </span>
+                    <span className="text-xs text-gray-700">{item.series}</span>
+                  </li>
+                )
+              )}
+            </ul>
+          )}
+        </section>
+
+        <section className="w-full relative home-section pt-10 pb-0">
+          <div className="flex flex-col items-center justify-center gap-2 bg-white pb-10">
+            <div className="w-[200px] h-auto aspect-[358/245]">
               <ImageWithFallback
                 src="/assets/image/common/intro.png"
                 alt="intro_img"
@@ -199,14 +164,14 @@ const FeedLayout: FC<Props> = (props) => {
               <br />
               彙集了很多有趣好玩又新奇的話題，待你來探索！
             </p>
-            <div className="absolute bottom-1 right-0">
-              <Link
-                href="/about"
-                className="bg-cute-beige text-gray-500 text-sm font-bold rounded-tl-full rounded-b pr-4 pl-5 py-2"
-              >{`更了解我們 >`}</Link>
-            </div>
           </div>
-        </div>
+          <div className="absolute bottom-1 right-0">
+            <Link
+              href="/about"
+              className="bg-cute-beige text-gray-500 text-sm font-bold rounded-tl-full rounded-b pr-4 pl-5 py-2"
+            >{`更了解我們 >`}</Link>
+          </div>
+        </section>
       </div>
     </main>
   );
