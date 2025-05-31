@@ -13,7 +13,7 @@
     @apply bg-white border-2 border-cute-beige rounded-md p-6
   }
   .home-title {
-    @apply w-fit text-xl font-bold text-dark-brown mb-4 border-b-[6px] border-cute-beige
+    @apply w-fit text-xl font-bold text-dark-brown mb-4 pb-1 border-b-4 border-cute-beige after:content-['_>>']
   }
 
   .icon-white path {
