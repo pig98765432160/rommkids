@@ -22,6 +22,7 @@ import "swiper/css/navigation";
 import { BorderColor } from "@mui/icons-material";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import TypeStyleBlock from "@/components/Template/TypeStyleBlock";
 require("dayjs/locale/zh-tw");
 dayjs.extend(relativeTime);
 
@@ -98,8 +99,10 @@ const headlines = [
 const feedData = [
   {
     id: 1,
-    title: "討論話題：用避雷針來發電，可能嗎？",
-    type: "other",
+    title: "【心得】6位未來新角唯一的男人——仇遠的人氣到底有多高？",
+    content:
+      "【仇遠官圖鎮樓】 浪跡不定的孤劍 就在漂泊者抽完6+1布蘭特，在愁新的男共鳴者的時候， 前瞻直播結尾放出了6張新角立繪，其中的仇",
+    type: "game",
     author: "匿名",
     private: true,
     dateline: 1748670483,
@@ -107,7 +110,10 @@ const feedData = [
   },
   {
     id: 2,
-    title: "test2test2test2test2test2test2test2test2test2test2test2test2",
+    title:
+      "【心得】淺談本期限定機體補給池 -  鋼彈試作2號機&夏亞專用薩克Ⅱ，無課究竟要不要抽？",
+    content:
+      "瑪秋鎮樓 淺談本期限定機體補給池 - 鋼彈試作2號機&夏亞專用薩克Ⅱ，無課究竟要不要抽？ 鑑於上一篇的評價文迴響不錯，所以繼續做",
     type: "other",
     author: "歐麥麥",
     private: false,
@@ -116,12 +122,63 @@ const feedData = [
   },
   {
     id: 3,
-    title: "testtest",
-    type: "other",
+    title: "【閒聊】女神對新手異常不友好 和各種奇怪現象",
+    content:
+      "有聽聞女神的人特別兇所以51等候都打野圖一直沒去打女神 但想說至少解掉日記頁和打BOSS的任務 66等才硬著頭皮去打第一場 昨天找了個",
+    type: "mood",
     author: "匿名",
     private: true,
     dateline: 1748670483,
     likedCount: 23,
+  },
+  {
+    id: 4,
+    title: "【閒聊】永推志喜屋",
+    content:
+      "看到這篇有感而發 老實說我覺得溫水對八奈見的態度一直都是有點小厭煩，一直都是八奈見單方",
+    type: "acg",
+    author: "匿名",
+    private: true,
+    dateline: 1748670483,
+    likedCount: 221,
+  },
+  {
+    id: 5,
+    title: "【閒聊】永推志喜屋",
+    content:
+      "看到這篇有感而發 老實說我覺得溫水對八奈見的態度一直都是有點小厭煩，一直都是八奈見單方",
+    type: "question",
+    author: "匿名",
+    private: true,
+    dateline: 1748670483,
+    likedCount: 221,
+  },
+];
+
+const homelist = [
+  {
+    id: 1,
+    label: "全部",
+  },
+  {
+    id: 2,
+    label: "動漫角落",
+  },
+  {
+    id: 3,
+    label: "遊戲角落",
+  },
+  {
+    id: 4,
+    label: "偷偷說",
+  },
+  {
+    id: 5,
+    label: "其他",
+  },
+  {
+    id: 6,
+    label: "我想問問",
   },
 ];
 
@@ -131,6 +188,7 @@ const Home = () => {
   const today = useMemo(() => new Date(), []);
   const [isMounted, setIsMounted] = useState(false);
   const [activeIndex, setActiveIndex] = useState(1);
+  const [chooseCatId, setChooseCatId] = useState(1);
 
   const todayYearMonth = useMemo(() => {
     const year = today.getFullYear();
@@ -327,22 +385,46 @@ const Home = () => {
         </section> */}
 
         <section className="">
-          <h2 className="">熱門討論</h2>
+          <h2 className="home-title">熱門討論</h2>
+          <ul className="flex items-center gap-2 my-5">
+            {homelist.map((item) => (
+              <li
+                key={item.id}
+                id={item.id.toString()}
+                className={`${
+                  item.id === chooseCatId
+                    ? " bg-cute-dark-brown text-white"
+                    : " bg-cute-beige text-gray-600"
+                } homelist-cat`}
+              >
+                <button onClick={(e) => setChooseCatId(item.id)}>
+                  {item.label}
+                </button>
+              </li>
+            ))}
+          </ul>
           <div className="flex flex-col gap-2">
             {feedData.map((item) => (
               <div key={item.id} className="flex flex-col gap-2 bg-white p-4">
                 <div className="flex items-center gap-2">
                   <Avatar
                     sx={{
-                      width: "18px",
-                      height: "18px",
+                      width: 20,
+                      height: 20,
                     }}
                   />
                   <p className="text-sm text-gray-600">{item.author}</p>
                 </div>
-                <h2 className="text-dark-brown font-black text-xl">
-                  {item.title}
-                </h2>
+                <div className="flex flex-col gap-1">
+                  <div className="flex items-center gap-2">
+                    <TypeStyleBlock type={item.type} />
+                    <h3 className="text-dark-brown font-bold text-lg">
+                      {item.title}
+                    </h3>
+                  </div>
+
+                  <p className="text-cute-dark-brown">{item.content}</p>
+                </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1">
                     <HeartIcon width={16} height={16} className="" />

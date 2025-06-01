@@ -28,6 +28,7 @@ module.exports = {
         "cute-blue": "#CFE6F6",
         "cute-green": "#B4DF9C",
         "cute-beige": "#EFDFD0",
+        "cute-red": "FFC4B4",
         "black-board": "#2E7D22",
       },
     },

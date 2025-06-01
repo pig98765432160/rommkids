@@ -15,6 +15,9 @@
   .home-title {
     @apply w-fit text-xl font-bold text-dark-brown mb-4 pb-1 border-b-4 border-cute-beige after:content-['_>>']
   }
+  .homelist-cat {
+    @apply w-fit text-sm font-medium rounded-full px-3 py-1
+  }
 
   .icon-white path {
     fill: theme("colors.white")
