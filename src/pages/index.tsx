@@ -68,31 +68,59 @@ const hotGame = [
 const headlines = [
   {
     id: 1,
-    title: "討論話題：用避雷針來發電，可能嗎？",
+    title: "【科學探討】雷電能源利用的可能性與技術挑戰",
     cover: "/assets/image/article/cover_1.png",
     type: "other",
-    tags: ["冷知識"],
+    tags: ["科學", "能源", "冷知識"],
   },
   {
     id: 2,
-    title: "test2test2test2test2test2test2test2test2test2test2test2test2",
+    title: "【遊戲評測】薩爾達傳說：王國之淚 - 創造系統深度解析",
     cover: "/assets/image/article/cover_2.png",
     type: "game",
-    tags: ["遊戲", "薩爾達傳說"],
+    tags: ["遊戲評測", "薩爾達傳說", "Nintendo Switch"],
   },
   {
     id: 3,
-    title: "test2",
+    title: "【動漫推薦】2025年冬季新番必看清單與觀看指南",
     cover: "/assets/image/article/cover_3.png",
     type: "acg",
-    tags: [],
+    tags: ["動漫推薦", "新番", "2025冬季"],
   },
   {
     id: 4,
-    title: "test2",
-    cover: "/assets/image/article/cover_4.png",
+    title: "【手遊攻略】原神4.4版本新角色培養優先度分析",
+    cover: "/assets/image/article/cover_1.png",
     type: "game",
-    tags: [],
+    tags: ["原神", "手遊攻略", "角色培養"],
+  },
+  {
+    id: 5,
+    title: "【技術分享】AI繪圖工具在動漫創作中的應用與倫理思考",
+    cover: "/assets/image/article/cover_2.png",
+    type: "other",
+    tags: ["AI", "繪圖", "創作技術"],
+  },
+  {
+    id: 6,
+    title: "【深度解析】鬼滅之刃劇場版：無限城篇製作幕後揭秘",
+    cover: "/assets/image/article/cover_3.png",
+    type: "acg",
+    tags: ["鬼滅之刃", "劇場版", "動畫製作"],
+  },
+  {
+    id: 7,
+    title: "【電競賽事】2025年春季職業聯賽戰隊實力分析",
+    cover: "/assets/image/article/cover_1.png",
+    type: "game",
+    tags: ["電競", "職業聯賽", "戰隊分析"],
+  },
+  {
+    id: 8,
+    title: "【文化探討】日本動漫產業的數位轉型與未來趨勢",
+    cover: "/assets/image/article/cover_2.png",
+    type: "acg",
+    tags: ["動漫產業", "數位轉型", "趨勢分析"],
   },
 ];
 
@@ -448,6 +476,15 @@ const Home = () => {
               <></>
             )}
           </ul> */}
+        </section>
+
+        {/* 嗄歐麥麥遊戲直播區塊 */}
+        <section className="w-full max-w-[916px] my-8">
+          <YoutubeEmbed 
+            showLatestVideos={true}
+            maxResults={6}
+            showChannelHeader={true}
+          />
         </section>
 
         {/* <section className="home-section">

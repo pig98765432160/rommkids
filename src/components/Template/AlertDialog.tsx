@@ -1,5 +1,5 @@
 import { Dialog, DialogContent } from "@mui/material";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
 import { CloseIcon, InfoIcon, NoticeIcon } from "@/components/Icons/icons";
@@ -12,6 +12,22 @@ const AlertDialog: FC = () => {
   );
   const router = useRouter();
   const dispatch = useDispatch();
+
+  const handleClose = useCallback(() => {
+    dispatch({
+      type: "alert/update",
+      payload: {
+        status,
+        open: false,
+        text,
+      },
+    });
+    if (link) {
+      window.location = link;
+    } else if (routerLink) {
+      router.push(routerLink[0], routerLink[1], { shallow: true });
+    }
+  }, [dispatch, status, text, link, routerLink, router]);
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout | null = null;
@@ -31,23 +47,7 @@ const AlertDialog: FC = () => {
         clearTimeout(timeoutId);
       }
     };
-  }, [open, closeBtn, status]);
-
-  const handleClose = () => {
-    dispatch({
-      type: "alert/update",
-      payload: {
-        status,
-        open: false,
-        text,
-      },
-    });
-    if (link) {
-      window.location = link;
-    } else if (routerLink) {
-      router.push(routerLink[0], routerLink[1], { shallow: true });
-    }
-  };
+  }, [open, closeBtn, status, handleClose]);
 
   return (
     <Dialog

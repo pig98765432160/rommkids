@@ -54,25 +54,29 @@ const SiteMenu: FC = () => {
   }));
 
   return (
-    <ul className="w-full h-full flex items-center justify-around overflow-auto text-sm px-20">
-      {type.map((item, index) => (
-        <li key={index} className="relative w-full border-r border-gray-400">
-          <Link
-            href={
-              item.type === EBoardType.ABOUT
-                ? item.type
-                : `/forums/${item.type}`
-            }
-            className="flex items-center justify-center gap-1 group"
-          >
-            {getIcon(item.type)}
-            <p className="relative z-10 text-dark-brown font-semibold">
-              {item.label}
-            </p>
-          </Link>
-        </li>
-      ))}
-    </ul>
+    <nav className="hidden md:flex">
+      <ul className="flex items-center justify-center gap-6 text-sm">
+        {type.map((item, index) => (
+          <li key={index} className="relative">
+            <Link
+              href={
+                item.type === EBoardType.ABOUT
+                  ? item.type
+                  : `/forums/${item.type}`
+              }
+              className="flex items-center justify-center gap-2 group px-3 py-2 rounded-lg hover:bg-white/30 transition-all duration-200"
+            >
+              <div className="transform group-hover:scale-110 transition-transform duration-200">
+                {getIcon(item.type)}
+              </div>
+              <span className="text-dark-brown font-medium group-hover:text-dark-brown/80 transition-colors">
+                {item.label}
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 };
 

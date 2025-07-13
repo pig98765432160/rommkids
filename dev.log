@@ -1,0 +1,38 @@
+
+> rommkids@0.1.0 dev
+> next dev
+
+  ▲ Next.js 13.5.11
+  - Local:        http://localhost:3000
+  - Environments: .env
+
+ ✓ Ready in 3.1s
+ ○ Compiling / ...
+ ✓ Compiled / in 12.5s (1541 modules)
+Warning: React does not recognize the `fetchPriority` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `fetchpriority` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+    at img
+    at eval (webpack-internal:///./node_modules/.pnpm/next@13.5.11_@opentelemetry+api@1.9.0_react-dom@18.3.1_react@18.3.1__react@18.3.1_sass@1.89.0/node_modules/next/dist/client/image-component.js:131:11)
+    at eval (webpack-internal:///./node_modules/.pnpm/next@13.5.11_@opentelemetry+api@1.9.0_react-dom@18.3.1_react@18.3.1__react@18.3.1_sass@1.89.0/node_modules/next/dist/client/image-component.js:238:47)
+    at div
+    at a
+    at LinkComponent (webpack-internal:///./node_modules/.pnpm/next@13.5.11_@opentelemetry+api@1.9.0_react-dom@18.3.1_react@18.3.1__react@18.3.1_sass@1.89.0/node_modules/next/dist/client/link.js:105:19)
+    at div
+    at header
+    at Header (webpack-internal:///./src/components/Layout/Header.tsx:42:84)
+    at a (/home/vivian/rommkids/node_modules/.pnpm/next@13.5.11_@opentelemetry+api@1.9.0_react-dom@18.3.1_react@18.3.1__react@18.3.1_sass@1.89.0/node_modules/next/dist/compiled/next-server/pages.runtime.dev.js:30:2941)
+    at div
+    at Layout (webpack-internal:///./src/components/Layout/Layout.tsx:45:19)
+    at Provider (file:///home/vivian/rommkids/node_modules/.pnpm/react-redux@9.2.0_@types+react@19.1.6_react@18.3.1_redux@5.0.1/node_modules/react-redux/dist/react-redux.mjs:875:11)
+    at ErrorBoundary (webpack-internal:///./src/components/ErrorBoundary.tsx:57:9)
+    at QueryClientProvider (/home/vivian/rommkids/node_modules/.pnpm/react-query@3.39.3_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/react-query/lib/react/QueryClientProvider.js:45:21)
+    at App (webpack-internal:///./src/pages/_app.tsx:38:16)
+    at StyleRegistry (/home/vivian/rommkids/node_modules/.pnpm/styled-jsx@5.1.1_react@18.3.1/node_modules/styled-jsx/dist/index/index.js:449:36)
+    at ek (/home/vivian/rommkids/node_modules/.pnpm/next@13.5.11_@opentelemetry+api@1.9.0_react-dom@18.3.1_react@18.3.1__react@18.3.1_sass@1.89.0/node_modules/next/dist/compiled/next-server/pages.runtime.dev.js:30:13126)
+    at eY (/home/vivian/rommkids/node_modules/.pnpm/next@13.5.11_@opentelemetry+api@1.9.0_react-dom@18.3.1_react@18.3.1__react@18.3.1_sass@1.89.0/node_modules/next/dist/compiled/next-server/pages.runtime.dev.js:39:1766)
+    at eV (/home/vivian/rommkids/node_modules/.pnpm/next@13.5.11_@opentelemetry+api@1.9.0_react-dom@18.3.1_react@18.3.1__react@18.3.1_sass@1.89.0/node_modules/next/dist/compiled/next-server/pages.runtime.dev.js:39:3110)
+    at div
+    at e1 (/home/vivian/rommkids/node_modules/.pnpm/next@13.5.11_@opentelemetry+api@1.9.0_react-dom@18.3.1_react@18.3.1__react@18.3.1_sass@1.89.0/node_modules/next/dist/compiled/next-server/pages.runtime.dev.js:48:761)
+ ✓ Compiled /api/youtube/latest in 2.9s (669 modules)
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 3.6s (1543 modules)
+ ✓ Compiled /api/youtube/latest in 1111ms (669 modules)

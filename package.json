@@ -20,6 +20,7 @@
     "firebase-admin": "^13.1.0",
     "froala-editor": "^4.2.1",
     "next": "^13.1.1",
+    "pnpm": "^10.13.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-froala-wysiwyg": "^4.2.1",
