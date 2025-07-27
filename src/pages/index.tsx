@@ -286,7 +286,7 @@ const Home = () => {
           </div>
         </div>
 
-        <section className="w-full max-w-[916px] select-none my-8">
+        {/* <section className="w-full max-w-[916px] select-none my-8">
           <h2 className="home-title">精選推薦</h2>
           {isMounted ? (
             <div className="relative top-swiper">
@@ -384,7 +384,12 @@ const Home = () => {
               />
             </div>
           )}
-        </section>
+        </section> */}
+
+        {/* 遊戲直播區塊 */}
+        {/* <section className="w-full max-w-[916px] my-8">
+          <YoutubeEmbed showLatestVideos={true} />
+        </section> */}
 
         {/* <section className="">
           <h2 className="home-title">精選動漫 / 遊戲</h2>
@@ -476,15 +481,6 @@ const Home = () => {
               <></>
             )}
           </ul> */}
-        </section>
-
-        {/* 嗄歐麥麥遊戲直播區塊 */}
-        <section className="w-full max-w-[916px] my-8">
-          <YoutubeEmbed 
-            showLatestVideos={true}
-            maxResults={6}
-            showChannelHeader={true}
-          />
         </section>
 
         {/* <section className="home-section">

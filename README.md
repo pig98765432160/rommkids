@@ -1,34 +1,80 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Anime & Game 匿名分享平台
 
-## Getting Started
+這是一個為喜愛動漫與遊戲的用戶打造的匿名分享空間。使用者可以發表貼文、分享圖片、交流心情，平台風格可愛、日系，重視使用者隱私與自由。
 
-First, run the development server:
+---
+
+## 🛠 使用技術
+
+- **框架**：Next.js (使用 Page Router) + React 18
+- **CSS**：Tailwind CSS 搭配 Material UI
+- **後端**：Firebase Firestore
+- **資料快取**：Node.js + Cron 定時快取
+- **套件管理**：pnpm
+- **程式語言**：JavaScript / TypeScript（如適用）
+- **其他**：YouTube Data API v3
+
+---
+
+## 🚀 開發啟動方式
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+pnpm install       # 安裝套件
+pnpm run dev       # 啟動本地開發伺服器
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+瀏覽器開啟 http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### ⏰ 每日快取 YouTube 資料
 
-## Learn More
+為避免頻繁呼叫 API 而超過配額，我們每日自動快取 YouTube Live 的影片清單到 data/youtube.json 中。
 
-To learn more about Next.js, take a look at the following resources:
+#### 🛠 快取腳本位置
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+腳本位於：
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+scripts/fetchYoutube.js
+```
 
-## Deploy on Vercel
+#### 📦 快取結果存放位置
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+快取成功後，影片資料會儲存在：
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+data/youtube.json
+```
+
+#### 🧪 手動執行方式
+
+若需手動執行快取腳本：
+
+```bash
+pnpm run fetch:youtube
+```
+
+需於 package.json 中加入以下指令（已加就可略過）：
+
+```bash
+{
+  "scripts": {
+    "fetch:youtube": "node scripts/fetchYoutube.js"
+  }
+}
+```
+
+---
+
+#### ⚠️ 注意事項
+
+若遇到 quotaExceeded，請勿短時間內重複執行 fetch，建議等待配額刷新或改用快取資料。
+youtube.json 為快取檔案，請勿直接手動修改。
+
+#### 📌 TODO & 待辦清單
+
+- 用戶匿名帳號管理
+- 貼文分類與推薦系統
+- D3.js 小互動地圖（公會功能）
+- UI 日系風格優化

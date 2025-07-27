@@ -5,8 +5,19 @@ import { fetchCharacter } from "@/helpers/apis/animeCharactersApi";
 import { useQuery } from "react-query";
 import { EStatus } from "@/shared/types";
 import { errorAlert } from "@/helpers/baseAxios";
-import CakeIcon from "@mui/icons-material/Cake";
-import { CircularProgress } from "@mui/material";
+import {
+  Cake as CakeIcon,
+  TrendingUp as TrendingUpIcon,
+  VideogameAsset as VideogameAssetIcon,
+  Movie as MovieIcon,
+  Favorite as FavoriteIcon,
+  Star as StarIcon,
+  Whatshot as FireIcon,
+  Book as BookIcon,
+  CalendarToday as CalendarTodayIcon,
+  Group as GroupIcon,
+} from "@mui/icons-material";
+import { CircularProgress, Divider, Chip, Avatar, Box } from "@mui/material";
 import styles from "@/styles/homepage.module.scss";
 import { useRouter } from "next/router";
 
@@ -111,102 +122,245 @@ const FeedLayout: FC<Props> = (props) => {
         <Title />
       </div> */}
       {children}
-      <div className="shrink-0 w-[300px] flex flex-col items-center gap-3">
-        <section className="w-full home-section">
-          <div className="flex items-center justify-between gap-4 border-b border-brown pb-3">
-            <div className="flex items-center gap-2">
-              <CakeIcon className="text-pink-500" />
-              <h3 className="text-xl font-black text-brown">今日壽星</h3>
+
+      {/* 側邊欄 */}
+      <div className="shrink-0 w-[300px] flex flex-col items-center gap-4">
+        {/* 今日壽星區塊 */}
+        <section className="w-full home-section bg-gradient-to-br from-pink-50 to-purple-50 rounded-xl shadow-md">
+          <div className="p-4">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-pink-500 rounded-full">
+                <CakeIcon className="text-white text-lg" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-gray-800">
+                  今日生日快樂！
+                </h3>
+                <p className="text-xs text-gray-500">
+                  與你分享生日的二次元夥伴
+                </p>
+              </div>
             </div>
-          </div>
-          {characterStatus === EStatus.LOADING ? (
-            <div className="w-full flex items-center justify-center py-4">
-              <CircularProgress />
-            </div>
-          ) : (
-            <ul className="flex flex-col gap-2 my-4 text-brown">
-              {characterData?.map(
-                (
-                  item: { id: number; name: string; series: string },
-                  index: number
-                ) => (
-                  <li key={item.id} className="flex justify-between">
-                    <span className="font-bold">
-                      {index + 1}. {item.name}
+            <Divider className="my-2" />
+            {characterStatus === EStatus.LOADING ? (
+              <div className="w-full flex items-center justify-center py-4">
+                <CircularProgress size={24} />
+              </div>
+            ) : (
+              <div className="space-y-2">
+                {characterData
+                  ?.slice(0, 3)
+                  .map(
+                    (
+                      item: { id: number; name: string; series: string },
+                      index: number
+                    ) => (
+                      <div
+                        key={item.id}
+                        className="flex items-center gap-2 p-2 bg-white/60 rounded-lg hover:bg-white/80 transition-colors"
+                      >
+                        <Chip
+                          label={index + 1}
+                          size="small"
+                          className="bg-pink-400 text-white font-bold min-w-6 h-6"
+                        />
+                        <div className="flex-1 min-w-0">
+                          <div className="font-medium text-gray-800 truncate">
+                            {item.name}
+                          </div>
+                          <div className="text-xs text-gray-600 truncate">
+                            {item.series}
+                          </div>
+                        </div>
+                        <CakeIcon className="text-pink-400 text-sm" />
+                      </div>
+                    )
+                  )}
+                {characterData && characterData.length > 3 && (
+                  <div className="text-center pt-2">
+                    <span className="text-xs text-gray-500">
+                      還有 {characterData.length - 3} 位角色同樣生日快樂！
                     </span>
-                    <span className="text-xs text-gray-700">{item.series}</span>
-                  </li>
-                )
-              )}
-            </ul>
-          )}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </section>
 
-        <section className="w-full home-section">
-          <Link
-            aria-label="ROMM嗄歐麥麥遊戲頻道"
-            target="_blank"
-            href="https://www.youtube.com/channel/UCecPCPSb854wmZwFYoS8ieg"
-            className="text-brown font-bold text-sm text-right mt-5"
-          >
-            <h2 className="home-title">嗄歐麥麥遊戲直播</h2>
-          </Link>
-          <div className="flex flex-col gap-2">
-            <div className="w-full flex flex-col items-center border-2 border-cute-beige">
-              <YoutubeEmbed videoId="PQcFsyexL2c" />
-              <p className="text-sm text-center text-brown font-black py-1">
-                魔物獵人 荒野 part.4
-              </p>
+        {/* 熱門話題區塊 */}
+        <section className="w-full home-section bg-gradient-to-br from-orange-50 to-red-50 rounded-xl shadow-md">
+          <div className="p-4">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-orange-500 rounded-full">
+                <TrendingUpIcon className="text-white text-lg" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-gray-800">熱門話題</h3>
+                <p className="text-xs text-gray-500">大家都在討論什麼？</p>
+              </div>
             </div>
-            <div className="w-full flex flex-col items-center border-2 border-cute-beige">
-              <YoutubeEmbed videoId="QYaBEboXSEc" />
-              <p className="text-sm text-center text-brown font-black py-1">
-                魔物獵人 荒野 part.3
-              </p>
-            </div>
-            <div className="w-full flex flex-col items-center border-2 border-cute-beige">
-              <YoutubeEmbed videoId="lQ6uJoHGs7k" />
-              <p className="text-sm text-center text-brown font-black py-1">
-                魔物獵人 荒野 part.2
-              </p>
+            <Divider className="my-2" />
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 p-2 bg-white/60 rounded-lg hover:bg-white/80 transition-colors cursor-pointer">
+                <FireIcon className="text-red-500 text-sm" />
+                <span className="text-sm font-medium text-gray-800">
+                  #今日新番推薦
+                </span>
+                <Chip
+                  label="熱"
+                  size="small"
+                  className="bg-red-100 text-red-600 ml-auto"
+                />
+              </div>
+              <div className="flex items-center gap-2 p-2 bg-white/60 rounded-lg hover:bg-white/80 transition-colors cursor-pointer">
+                <VideogameAssetIcon className="text-blue-500 text-sm" />
+                <span className="text-sm font-medium text-gray-800">
+                  #手遊攻略分享
+                </span>
+                <Chip
+                  label="123"
+                  size="small"
+                  className="bg-blue-100 text-blue-600 ml-auto"
+                />
+              </div>
+              <div className="flex items-center gap-2 p-2 bg-white/60 rounded-lg hover:bg-white/80 transition-colors cursor-pointer">
+                <MovieIcon className="text-purple-500 text-sm" />
+                <span className="text-sm font-medium text-gray-800">
+                  #動畫心得討論
+                </span>
+                <Chip
+                  label="89"
+                  size="small"
+                  className="bg-purple-100 text-purple-600 ml-auto"
+                />
+              </div>
+              <div className="flex items-center gap-2 p-2 bg-white/60 rounded-lg hover:bg-white/80 transition-colors cursor-pointer">
+                <FavoriteIcon className="text-pink-500 text-sm" />
+                <span className="text-sm font-medium text-gray-800">
+                  #推薦好作品
+                </span>
+                <Chip
+                  label="67"
+                  size="small"
+                  className="bg-pink-100 text-pink-600 ml-auto"
+                />
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="w-full relative home-section pt-10 pb-0">
-          <div className="flex flex-col items-center justify-center gap-2 bg-white pb-10">
-            <div className="w-[200px] h-auto aspect-[358/245]">
-              <ImageWithFallback
-                src="/assets/image/common/intro.png"
-                alt="intro_img"
-                width={358}
-                height={245}
-                className="w-full h-full"
-                isBlur={true}
-                fallbackSrc="/assets/image/common/slider_img_nophoto.jpg"
-                priority={false}
-                loading="lazy"
-              />
+        {/* 社群統計區塊 */}
+        <section className="w-full home-section bg-gradient-to-br from-green-50 to-blue-50 rounded-xl shadow-md">
+          <div className="p-4">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-green-500 rounded-full">
+                <GroupIcon className="text-white text-lg" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-gray-800">社群動態</h3>
+                <p className="text-xs text-gray-500">一起打造溫暖的社群</p>
+              </div>
             </div>
-            {/* <p className="font-bold text-cute-dark-brown mt-3">
-              歡迎來到嗄歐麥麥！
-              <br />
-              一個為喜愛動漫與遊戲的你打造的匿名分享空間
-              <br />
-              在這裡，你可以抒發心情、留下足跡、提問或閒聊
-              <br />
-              不用擔心身分曝光，讓真實的想法自由流動～
-              <br />
-              放下壓力
-              <br />
-              來說說最近你心裡的事吧——
-            </p> */}
+            <Divider className="my-2" />
+            <div className="grid grid-cols-2 gap-3">
+              <div className="bg-white/60 rounded-lg p-3 text-center hover:bg-white/80 transition-colors">
+                <div className="text-lg font-bold text-blue-600">1,247</div>
+                <div className="text-xs text-gray-600">活躍玩家</div>
+              </div>
+              <div className="bg-white/60 rounded-lg p-3 text-center hover:bg-white/80 transition-colors">
+                <div className="text-lg font-bold text-green-600">3,892</div>
+                <div className="text-xs text-gray-600">今日貼文</div>
+              </div>
+              <div className="bg-white/60 rounded-lg p-3 text-center hover:bg-white/80 transition-colors">
+                <div className="text-lg font-bold text-purple-600">156</div>
+                <div className="text-xs text-gray-600">新加入</div>
+              </div>
+              <div className="bg-white/60 rounded-lg p-3 text-center hover:bg-white/80 transition-colors">
+                <div className="text-lg font-bold text-orange-600">42</div>
+                <div className="text-xs text-gray-600">線上中</div>
+              </div>
+            </div>
           </div>
-          <div className="absolute bottom-1 right-0">
-            <Link
-              href="/about"
-              className="bg-cute-beige text-gray-500 text-sm font-bold rounded-tl-full rounded-b pr-4 pl-5 py-2"
-            >{`更了解我們 >`}</Link>
+        </section>
+
+        {/* 社群介紹區塊 */}
+        <section className="w-full relative home-section bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl shadow-md overflow-hidden">
+          <div className="relative pt-6 pb-7">
+            <div className="absolute top-3 right-3">
+              <div className="flex gap-1">
+                <StarIcon className="text-yellow-400 text-sm" />
+                <StarIcon className="text-yellow-400 text-sm" />
+                <StarIcon className="text-yellow-400 text-sm" />
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center justify-center gap-4">
+              <div className="w-[150px] h-auto aspect-[358/245] relative">
+                <ImageWithFallback
+                  src="/assets/image/common/intro.png"
+                  alt="intro_img"
+                  width={358}
+                  height={245}
+                  className="w-full h-full rounded-lg shadow-sm"
+                  isBlur={true}
+                  fallbackSrc="/assets/image/common/slider_img_nophoto.jpg"
+                  priority={false}
+                  loading="lazy"
+                />
+                <div className="absolute -top-2 -right-2 bg-orange-500 text-white rounded-full p-1">
+                  <FavoriteIcon className="text-sm" />
+                </div>
+              </div>
+
+              <div className="text-center space-y-3">
+                <h2 className="text-xl font-bold text-gray-800 flex items-center gap-1 justify-center">
+                  <span className="text-2xl">🎮</span>
+                  歡迎來到嗄歐麥麥
+                  <span className="text-2xl">✨</span>
+                </h2>
+
+                <div className="bg-white/80 rounded-lg px-2 py-5 text-sm text-gray-700 leading-relaxed">
+                  <p className="font-medium text-orange-600 mb-2">
+                    🌟專為ACG愛好者打造的溫馨小站
+                  </p>
+                  <span className="text-left">
+                    <p className="ml-3">
+                      在這個匿名的二次元世界裡
+                      <br />
+                      你可以：
+                    </p>
+                  </span>
+                  <div className="mt-2 ml-3 space-y-1 text-xs">
+                    <div className="flex items-center gap-1">
+                      <span className="w-2 h-2 bg-pink-400 rounded-full"></span>
+                      <span>分享你的遊戲心得與動漫感想</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <span className="w-2 h-2 bg-blue-400 rounded-full"></span>
+                      <span>尋找志同道合的二次元夥伴</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+                      <span>放下面具，暢所欲言真實想法</span>
+                    </div>
+                  </div>
+                  <p className="mt-3 text-center font-medium text-gray-600">
+                    💭 今天想聊什麼有趣的話題呢？
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="absolute bottom-0 -right-1">
+              <Link
+                href="/about"
+                className="bg-orange-400 hover:bg-orange-500 text-white text-xs font-bold rounded-full px-4 py-2 shadow-md transition-colors duration-200 flex items-center gap-1"
+              >
+                <BookIcon className="text-sm" />
+                了解更多
+              </Link>
+            </div>
           </div>
         </section>
       </div>

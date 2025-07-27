@@ -1,28 +1,16 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { fetchLatestVideos } from '@/helpers/apis/youtubeApi';
+// pages/api/youtube/latest.ts
+import type { NextApiRequest, NextApiResponse } from "next";
+import fs from "fs";
+import path from "path";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  const filePath = path.join(process.cwd(), "data/youtube.json");
 
   try {
-    const { maxResults = 6 } = req.query;
-    const result = await fetchLatestVideos(Number(maxResults));
-    
-    if (result.success) {
-      res.status(200).json(result);
-    } else {
-      res.status(500).json(result);
-    }
-  } catch (error) {
-    console.error('YouTube API 端點錯誤:', error);
-    res.status(500).json({
-      success: false,
-      error: '伺服器內部錯誤'
-    });
+    const fileContent = fs.readFileSync(filePath, "utf-8");
+    const data = JSON.parse(fileContent);
+    res.status(200).json({ success: true, data });
+  } catch (e) {
+    res.status(500).json({ success: false, error: "無法讀取快取影片資料" });
   }
 }

@@ -27,9 +27,10 @@ const YOUTUBE_API_BASE_URL = 'https://www.googleapis.com/youtube/v3';
 /**
  * 從 YouTube 頻道獲取最新影片
  * @param maxResults 最多返回的影片數量 (預設: 6)
+ * @param liveOnly 是否只獲取直播影片 (預設: false)
  * @returns Promise<YouTubeAPIResponse>
  */
-export const fetchLatestVideos = async (maxResults: number = 6): Promise<YouTubeAPIResponse> => {
+export const fetchLatestVideos = async (maxResults: number = 6, liveOnly: boolean = false): Promise<YouTubeAPIResponse> => {
   try {
     if (!YOUTUBE_API_KEY || YOUTUBE_API_KEY === 'your-youtube-api-key-here') {
       return {
@@ -39,15 +40,22 @@ export const fetchLatestVideos = async (maxResults: number = 6): Promise<YouTube
     }
 
     // 第一步：搜索頻道最新影片
+    const searchParams: any = {
+      key: YOUTUBE_API_KEY,
+      channelId: YOUTUBE_CHANNEL_ID,
+      part: 'snippet',
+      order: 'date',
+      maxResults: maxResults,
+      type: 'video'
+    };
+
+    // 如果只要直播影片，加入 eventType 參數
+    if (liveOnly) {
+      searchParams.eventType = 'completed'; // 獲取已完成的直播
+    }
+
     const searchResponse = await axios.get(`${YOUTUBE_API_BASE_URL}/search`, {
-      params: {
-        key: YOUTUBE_API_KEY,
-        channelId: YOUTUBE_CHANNEL_ID,
-        part: 'snippet',
-        order: 'date',
-        maxResults: maxResults,
-        type: 'video'
-      }
+      params: searchParams
     });
 
     const videos: YouTubeVideo[] = searchResponse.data.items.map((item: any) => ({
