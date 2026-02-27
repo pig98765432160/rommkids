@@ -291,7 +291,7 @@ const Home = () => {
                           width={1024}
                           height={1024}
                           className="bg-black w-full h-full object-cover hoverimg rounded-t-xl"
-                          fallbackSrc="/feed/slider_img_nophoto.jpg"
+                          fallbackSrc="/assets/image/common/slider_img_nophoto.jpg"
                           priority={true}
                           isBlur={false}
                           loading="eager"
@@ -369,7 +369,7 @@ const Home = () => {
                 alt="魔物獵人 荒野"
                 className="w-full h-full object-cover"
                 priority={true}
-                fallbackSrc={"/feed/slider_img_nophoto.jpg"}
+                fallbackSrc={"/assets/image/common/slider_img_nophoto.jpg"}
               />
             </div>
             <div className="flex flex-col gap-2 p-4">
@@ -467,7 +467,7 @@ const Home = () => {
                       height={360}
                       className="w-full h-full object-cover rounded-md"
                       priority={true}
-                      fallbackSrc={"/feed/slider_img_nophoto.jpg"}
+                      fallbackSrc={"/assets/image/common/slider_img_nophoto.jpg"}
                     />
                   </div>
                   <h3 className="text-lg font-semibold group-hover:text-brown">
@@ -486,7 +486,7 @@ const Home = () => {
                       height={360}
                       className="w-full h-full object-cover rounded-md"
                       priority={true}
-                      fallbackSrc={"/feed/slider_img_nophoto.jpg"}
+                      fallbackSrc={"/assets/image/common/slider_img_nophoto.jpg"}
                     />
                   </div>
                   <h3 className="text-lg font-semibold group-hover:text-brown">
