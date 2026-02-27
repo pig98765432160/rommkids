@@ -10,7 +10,6 @@ export default async function handler(
     return res.status(405).json({ message: "Method Not Allowed" });
   }
 
-  // 讀取 query，防止 undefined / array / 空字串
   const { birthday } = req.query;
   if (!birthday) {
     return res
@@ -24,7 +23,6 @@ export default async function handler(
   }
 
   try {
-    // DEBUG: log 查詢值
     console.log("Query birthday:", birthdayStr);
 
     const snapshot = await db
@@ -34,7 +32,6 @@ export default async function handler(
 
     const results = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
-    // DEBUG: log 查到的資料
     console.log("Fetched characters:", results);
 
     return res.status(200).json({ status: "success", data: results });
