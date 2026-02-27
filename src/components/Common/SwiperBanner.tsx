@@ -22,7 +22,7 @@ const SwiperBanner: FC<Props> = ({ data }) => {
             alt={item.name}
             className="w-full h-full object-cover"
             priority={true}
-            fallbackSrc={"/feed/slider_img_nophoto.jpg"}
+            fallbackSrc={"/assets/image/common/slider_img_nophoto.jpg"}
           />
           <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-gray-800 to-transparent"></div>
           <p className="absolute bottom-2 text-white font-black text-3xl p-5">

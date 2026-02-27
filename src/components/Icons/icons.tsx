@@ -255,3 +255,43 @@ export const NoticeIcon: FC<Props> = (props) => {
     </svg>
   );
 };
+
+export const DropDownIcon: FC<Props> = (props) => {
+  const { width, height, className } = props;
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 14 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <path
+        d="M7.002 9.727a2.084 2.084 0 0 1-1.475-.609L2.123 5.714a.418.418 0 1 1 .591-.591l3.404 3.404a1.25 1.25 0 0 0 1.767 0l3.404-3.404a.418.418 0 0 1 .592.591L8.477 9.118a2.083 2.083 0 0 1-1.475.609z"
+        fill="#A0A0A0"
+      />
+    </svg>
+  );
+};
+
+export const HeartIcon: FC<Props> = (props) => {
+  const { width, height, className } = props;
+  return (
+    <svg
+      width={width}
+      height={height}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 16 16"
+      focusable="false"
+      role="img"
+      className={className}
+    >
+      <path
+        fillRule="evenodd"
+        d="M7.999 14s6.666-3.917 6.666-8.16a3.856 3.856 0 0 0-1.115-2.715 3.758 3.758 0 0 0-5.55.2 3.79 3.79 0 0 0-1.287-.976 3.758 3.758 0 0 0-4.265.776A3.856 3.856 0 0 0 1.332 5.84c0 4.243 6.667 8.16 6.667 8.16ZM5.139 3.333c-.652 0-1.28.262-1.745.73a2.522 2.522 0 0 0-.729 1.777c0 .713.283 1.5.827 2.34.54.833 1.285 1.633 2.068 2.343A21.623 21.623 0 0 0 8 12.418a22.474 22.474 0 0 0 2.438-1.895c.784-.71 1.528-1.51 2.068-2.343.544-.84.827-1.627.827-2.34 0-.668-.263-1.307-.729-1.776a2.424 2.424 0 0 0-3.59.127L7.998 5.377 6.985 4.191a2.424 2.424 0 0 0-1.845-.858Z"
+        clipRule="evenodd"
+      ></path>
+    </svg>
+  );
+};

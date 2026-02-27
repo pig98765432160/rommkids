@@ -2,7 +2,7 @@ import { BASE_URL } from "@/shared/constants";
 import { EStatus } from "@/shared/types/Status";
 import axios from "axios";
 
-const baseURL = `${BASE_URL}/api/`;
+const baseURL = `/api/`;
 
 export const axiosBase = axios.create({
   baseURL,
