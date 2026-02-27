@@ -52,7 +52,7 @@ const FeedLayout: FC<Props> = (props) => {
   const { data: characterData, status: characterStatus } = useQuery(
     ["character", newTime],
     async () => {
-      const res = await fetchCharacter({ birthday: newTime });
+      const res = await fetchCharacter(newTime);
       if (res.status === EStatus.SUCCESS) {
         return res.data;
       } else {
@@ -61,11 +61,12 @@ const FeedLayout: FC<Props> = (props) => {
       }
     },
     {
+      enabled: !!newTime,
       keepPreviousData: true,
       retry: false,
       staleTime: 1000 * 60 * 60 * 24,
       cacheTime: 1000 * 60 * 60 * 24,
-    }
+    },
   );
 
   // const Title = () => {
@@ -128,7 +129,7 @@ const FeedLayout: FC<Props> = (props) => {
               {characterData?.map(
                 (
                   item: { id: number; name: string; series: string },
-                  index: number
+                  index: number,
                 ) => (
                   <li key={item.id} className="flex justify-between">
                     <span className="font-bold">
@@ -136,7 +137,7 @@ const FeedLayout: FC<Props> = (props) => {
                     </span>
                     <span className="text-xs text-gray-700">{item.series}</span>
                   </li>
-                )
+                ),
               )}
             </ul>
           )}

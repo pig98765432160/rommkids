@@ -26,10 +26,11 @@ export const axiosGet = (url: string, params?: any) => {
       return res?.data;
     })
     .catch((error) => {
+      console.error("Axios GET ERROR:", error);
       return {
-        code: error?.response?.status,
-        status: error?.response?.data?.status,
-        data: error?.response?.data?.message,
+        code: error?.response?.status || 500,
+        status: error?.response?.data?.status || "error",
+        data: error?.response?.data?.message || error?.message || "未知錯誤",
       };
     });
 };

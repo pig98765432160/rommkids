@@ -8,6 +8,6 @@ import {
 } from "../baseAxios";
 
 // 取得角色資訊
-export const fetchCharacter = (params: any) => {
-  return axiosGet("character", params);
+export const fetchCharacter = (birthday: string) => {
+  return axiosGet("character", { birthday });
 };
